@@ -1,0 +1,11 @@
+AddShape 1 #0000FF circle 100.0 100.0 30.0
+AddShape 2 #FF0000 rectangle 200.0 200.0 50.0 50.0
+List
+MoveShape 1 50.0 50.0
+ChangeColor 2 #00FF00
+List
+DrawPicture
+DeleteShape 1
+List
+DrawPicture
+exit

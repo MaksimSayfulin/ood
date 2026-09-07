@@ -1,0 +1,114 @@
+AddShape pkg_shapes #333333 rectangle 30.0 40.0 940.0 840.0
+AddShape lbl_shapes #333333 text 50.0 75.0 22.0 Package:_Shapes
+
+AddShape pkg_gfx #333333 rectangle 1000.0 40.0 500.0 320.0
+AddShape lbl_gfx #333333 text 1020.0 75.0 22.0 Package:_gfx
+
+AddShape pkg_io #333333 rectangle 1000.0 400.0 500.0 480.0
+AddShape lbl_io #333333 text 1020.0 435.0 22.0 Package:_IOInterface
+
+AddShape box_picture #000000 rectangle 360.0 100.0 320.0 180.0
+AddShape txt_picture_title #000000 text 480.0 125.0 18.0 Picture
+AddShape line_picture_sep #000000 line 360.0 135.0 680.0 135.0
+AddShape txt_pic_m1 #1E88E5 text 370.0 160.0 13.0 +_AddShape(id,_color,_geometry)
+AddShape txt_pic_m2 #1E88E5 text 370.0 180.0 13.0 +_MoveShape(id,_dx,_dy)
+AddShape txt_pic_m3 #1E88E5 text 370.0 200.0 13.0 +_MovePicture(dx,_dy)
+AddShape txt_pic_m4 #1E88E5 text 370.0 220.0 13.0 +_DeleteShape(id)_/_List()
+AddShape txt_pic_m5 #1E88E5 text 370.0 240.0 13.0 +_ChangeColor()_/_ChangeShape()
+AddShape txt_pic_m6 #1E88E5 text 370.0 260.0 13.0 +_DrawShape()_/_DrawPicture()
+
+AddShape box_ishape #000000 rectangle 410.0 330.0 220.0 140.0
+AddShape txt_ishape_title #000000 text 490.0 355.0 16.0 IShape
+AddShape line_ishape_sep1 #000000 line 410.0 365.0 630.0 365.0
+AddShape txt_ishape_f1 #D32F2F text 420.0 385.0 12.0 -_m_id:_string
+AddShape txt_ishape_f2 #D32F2F text 420.0 405.0 12.0 -_m_color:_Color
+AddShape txt_ishape_f3 #D32F2F text 420.0 425.0 12.0 -_m_geometry:_unique_ptr
+AddShape line_ishape_sep2 #000000 line 410.0 435.0 630.0 435.0
+AddShape txt_ishape_m1 #1E88E5 text 420.0 455.0 12.0 +_Clone()_/_Draw()_/_Move()
+
+AddShape box_igeom #000000 rectangle 410.0 530.0 220.0 100.0
+AddShape txt_igeom_title #000000 text 450.0 555.0 16.0 IShapeGeometry
+AddShape line_igeom_sep #000000 line 410.0 565.0 630.0 565.0
+AddShape txt_igeom_m1 #1E88E5 text 420.0 585.0 12.0 +_Draw(ICanvas&amp;)_=_0
+AddShape txt_igeom_m2 #1E88E5 text 420.0 605.0 12.0 +_Move(dx,_dy)_=_0
+AddShape txt_igeom_m3 #1E88E5 text 420.0 622.0 12.0 +_Clone():_unique_ptr_=_0
+
+AddShape box_circle #000000 rectangle 60.0 700.0 150.0 90.0
+AddShape txt_circle_title #000000 text 110.0 725.0 14.0 Circle
+AddShape line_circle_sep #000000 line 60.0 735.0 210.0 735.0
+AddShape txt_circle_m1 #1E88E5 text 70.0 755.0 12.0 +_Draw(ICanvas&amp;)
+AddShape txt_circle_m2 #1E88E5 text 70.0 775.0 12.0 +_Clone():_unique_ptr
+
+AddShape box_rect #000000 rectangle 240.0 700.0 150.0 90.0
+AddShape txt_rect_title #000000 text 280.0 725.0 14.0 Rectangle
+AddShape line_rect_sep #000000 line 240.0 735.0 390.0 735.0
+AddShape txt_rect_m1 #1E88E5 text 250.0 755.0 12.0 +_Draw(ICanvas&amp;)
+AddShape txt_rect_m2 #1E88E5 text 250.0 775.0 12.0 +_Clone():_unique_ptr
+
+AddShape box_tri #000000 rectangle 420.0 700.0 150.0 90.0
+AddShape txt_tri_title #000000 text 465.0 725.0 14.0 Triangle
+AddShape line_tri_sep #000000 line 420.0 735.0 570.0 735.0
+AddShape txt_tri_m1 #1E88E5 text 430.0 755.0 12.0 +_Draw(ICanvas&amp;)
+AddShape txt_tri_m2 #1E88E5 text 430.0 775.0 12.0 +_Clone():_unique_ptr
+
+AddShape box_line #000000 rectangle 600.0 700.0 150.0 90.0
+AddShape txt_line_title #000000 text 655.0 725.0 14.0 Line
+AddShape line_line_sep #000000 line 600.0 735.0 750.0 735.0
+AddShape txt_line_m1 #1E88E5 text 610.0 755.0 12.0 +_Draw(ICanvas&amp;)
+AddShape txt_line_m2 #1E88E5 text 610.0 775.0 12.0 +_Clone():_unique_ptr
+
+AddShape box_text #000000 rectangle 780.0 700.0 150.0 90.0
+AddShape txt_text_title #000000 text 835.0 725.0 14.0 Text
+AddShape line_text_sep #000000 line 780.0 735.0 930.0 735.0
+AddShape txt_text_m1 #1E88E5 text 790.0 755.0 12.0 +_Draw(ICanvas&amp;)
+AddShape txt_text_m2 #1E88E5 text 790.0 775.0 12.0 +_Clone():_unique_ptr
+
+AddShape box_icanvas #000000 rectangle 1040.0 100.0 200.0 100.0
+AddShape txt_icanvas_title #000000 text 1110.0 125.0 16.0 ICanvas
+AddShape line_icanvas_sep #000000 line 1040.0 135.0 1240.0 135.0
+AddShape txt_icanvas_m1 #1E88E5 text 1050.0 155.0 12.0 +_SetColor(Color)
+AddShape txt_icanvas_m2 #1E88E5 text 1050.0 175.0 12.0 +_DrawEllipse()_/_LineTo()
+
+AddShape box_canvassvg #000000 rectangle 1040.0 230.0 200.0 90.0
+AddShape txt_canvassvg_title #000000 text 1100.0 255.0 16.0 CanvasSVG
+AddShape line_canvassvg_sep #000000 line 1040.0 265.0 1240.0 265.0
+AddShape txt_canvassvg_m1 #D32F2F text 1050.0 285.0 12.0 -_m_stream:_ofstream&amp;
+AddShape txt_canvassvg_m2 #1E88E5 text 1050.0 305.0 12.0 +_DrawEllipse()_/_LineTo()
+
+AddShape box_color #000000 rectangle 1280.0 100.0 190.0 100.0
+AddShape txt_color_title #000000 text 1350.0 125.0 16.0 Color
+AddShape line_color_sep #000000 line 1280.0 135.0 1470.0 135.0
+AddShape txt_color_f1 #D32F2F text 1290.0 155.0 12.0 -_m_color:_string
+AddShape txt_color_m1 #1E88E5 text 1290.0 180.0 12.0 +_GetColor():_string
+
+AddShape box_userinput #000000 rectangle 1040.0 480.0 200.0 120.0
+AddShape txt_userinput_title #000000 text 1105.0 505.0 16.0 UserInput
+AddShape line_userinput_sep #000000 line 1040.0 515.0 1240.0 515.0
+AddShape txt_userinput_f1 #D32F2F text 1050.0 540.0 12.0 -_m_input:_istream&amp;
+AddShape txt_userinput_m1 #1E88E5 text 1050.0 575.0 12.0 +_ReadInput():_vector
+
+AddShape box_cmdparser #000000 rectangle 1280.0 480.0 200.0 120.0
+AddShape txt_cmdparser_title #000000 text 1320.0 505.0 16.0 CommandParser
+AddShape line_cmdparser_sep #000000 line 1280.0 515.0 1480.0 515.0
+AddShape txt_cmdparser_f1 #D32F2F text 1290.0 540.0 12.0 -_m_picture:_Picture&amp;
+AddShape txt_cmdparser_m1 #1E88E5 text 1290.0 575.0 12.0 +_Parse(tokens)
+
+AddShape rel_pic_ishape #757575 line 520.0 330.0 520.0 280.0
+AddShape rel_ishape_igeom #757575 line 520.0 530.0 520.0 470.0
+
+AddShape rel_geom_bus #757575 line 135.0 660.0 855.0 660.0
+AddShape rel_geom_to_igeom #757575 line 520.0 660.0 520.0 630.0
+AddShape rel_c_bus #757575 line 135.0 700.0 135.0 660.0
+AddShape rel_r_bus #757575 line 315.0 700.0 315.0 660.0
+AddShape rel_t_bus #757575 line 495.0 700.0 495.0 660.0
+AddShape rel_l_bus #757575 line 675.0 700.0 675.0 660.0
+AddShape rel_txt_bus #757575 line 855.0 700.0 855.0 660.0
+
+AddShape rel_svg_canvas #757575 line 1140.0 230.0 1140.0 200.0
+
+AddShape rel_cmd_pic1 #757575 line 1280.0 540.0 980.0 540.0
+AddShape rel_cmd_pic2 #757575 line 980.0 540.0 980.0 190.0
+AddShape rel_cmd_pic3 #757575 line 980.0 190.0 680.0 190.0
+
+DrawPicture
+exit
