@@ -11,11 +11,5 @@ namespace shapes {
         [[nodiscard]] std::string GetParameters() const override;
         [[nodiscard]] std::string GetShapeName() const override;
         [[nodiscard]] IShapeGeometry * Clone() const override;
-
-    private:
-        double m_x1 = 0.0;
-        double m_y1 = 0.0;
-        double m_x2 = 0.0;
-        double m_y2 = 0.0;
     };
 }

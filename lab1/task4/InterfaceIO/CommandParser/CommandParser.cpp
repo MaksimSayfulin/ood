@@ -49,8 +49,6 @@ bool io::CommandParser::Parse(const std::vector<std::string> &tokens) const {
 }
 
 std::unique_ptr<shapes::IShapeGeometry> io::CommandParser::ParseGeometry(const std::vector<std::string> &tokens) {
-
-
     const std::string& geometryType = tokens[3];
 
     if (geometryType == "circle") {

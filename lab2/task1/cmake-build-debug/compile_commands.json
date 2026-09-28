@@ -1,0 +1,152 @@
+[
+{
+  "directory": "/home/maksim/ood/lab2/task1/cmake-build-debug",
+  "command": "/usr/bin/clang++ -g -std=c++26 -fcolor-diagnostics -o CMakeFiles/task4.dir/main.cpp.o -c /home/maksim/ood/lab2/task1/main.cpp",
+  "file": "/home/maksim/ood/lab2/task1/main.cpp",
+  "output": "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/task4.dir/main.cpp.o"
+},
+{
+  "directory": "/home/maksim/ood/lab2/task1/cmake-build-debug",
+  "command": "/usr/bin/clang++ -g -std=c++26 -fcolor-diagnostics -o CMakeFiles/task4.dir/Shape/IShape/IShape.cpp.o -c /home/maksim/ood/lab2/task1/Shape/IShape/IShape.cpp",
+  "file": "/home/maksim/ood/lab2/task1/Shape/IShape/IShape.cpp",
+  "output": "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/task4.dir/Shape/IShape/IShape.cpp.o"
+},
+{
+  "directory": "/home/maksim/ood/lab2/task1/cmake-build-debug",
+  "command": "/usr/bin/clang++ -g -std=c++26 -fcolor-diagnostics -o CMakeFiles/task4.dir/Shape/ShapeGeometry/ShapeGeometries/Circle/Circle.cpp.o -c /home/maksim/ood/lab2/task1/Shape/ShapeGeometry/ShapeGeometries/Circle/Circle.cpp",
+  "file": "/home/maksim/ood/lab2/task1/Shape/ShapeGeometry/ShapeGeometries/Circle/Circle.cpp",
+  "output": "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/task4.dir/Shape/ShapeGeometry/ShapeGeometries/Circle/Circle.cpp.o"
+},
+{
+  "directory": "/home/maksim/ood/lab2/task1/cmake-build-debug",
+  "command": "/usr/bin/clang++ -g -std=c++26 -fcolor-diagnostics -o CMakeFiles/task4.dir/Shape/ShapeGeometry/ShapeGeometries/Rectangle/Rectangle.cpp.o -c /home/maksim/ood/lab2/task1/Shape/ShapeGeometry/ShapeGeometries/Rectangle/Rectangle.cpp",
+  "file": "/home/maksim/ood/lab2/task1/Shape/ShapeGeometry/ShapeGeometries/Rectangle/Rectangle.cpp",
+  "output": "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/task4.dir/Shape/ShapeGeometry/ShapeGeometries/Rectangle/Rectangle.cpp.o"
+},
+{
+  "directory": "/home/maksim/ood/lab2/task1/cmake-build-debug",
+  "command": "/usr/bin/clang++ -g -std=c++26 -fcolor-diagnostics -o CMakeFiles/task4.dir/Shape/ShapeGeometry/ShapeGeometries/Triangle/Triangle.cpp.o -c /home/maksim/ood/lab2/task1/Shape/ShapeGeometry/ShapeGeometries/Triangle/Triangle.cpp",
+  "file": "/home/maksim/ood/lab2/task1/Shape/ShapeGeometry/ShapeGeometries/Triangle/Triangle.cpp",
+  "output": "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/task4.dir/Shape/ShapeGeometry/ShapeGeometries/Triangle/Triangle.cpp.o"
+},
+{
+  "directory": "/home/maksim/ood/lab2/task1/cmake-build-debug",
+  "command": "/usr/bin/clang++ -g -std=c++26 -fcolor-diagnostics -o CMakeFiles/task4.dir/Shape/ShapeGeometry/ShapeGeometries/Line/Line.cpp.o -c /home/maksim/ood/lab2/task1/Shape/ShapeGeometry/ShapeGeometries/Line/Line.cpp",
+  "file": "/home/maksim/ood/lab2/task1/Shape/ShapeGeometry/ShapeGeometries/Line/Line.cpp",
+  "output": "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/task4.dir/Shape/ShapeGeometry/ShapeGeometries/Line/Line.cpp.o"
+},
+{
+  "directory": "/home/maksim/ood/lab2/task1/cmake-build-debug",
+  "command": "/usr/bin/clang++ -g -std=c++26 -fcolor-diagnostics -o CMakeFiles/task4.dir/Shape/ShapeGeometry/ShapeGeometries/Text/Text.cpp.o -c /home/maksim/ood/lab2/task1/Shape/ShapeGeometry/ShapeGeometries/Text/Text.cpp",
+  "file": "/home/maksim/ood/lab2/task1/Shape/ShapeGeometry/ShapeGeometries/Text/Text.cpp",
+  "output": "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/task4.dir/Shape/ShapeGeometry/ShapeGeometries/Text/Text.cpp.o"
+},
+{
+  "directory": "/home/maksim/ood/lab2/task1/cmake-build-debug",
+  "command": "/usr/bin/clang++ -g -std=c++26 -fcolor-diagnostics -o CMakeFiles/task4.dir/Graphics/Color/Color.cpp.o -c /home/maksim/ood/lab2/task1/Graphics/Color/Color.cpp",
+  "file": "/home/maksim/ood/lab2/task1/Graphics/Color/Color.cpp",
+  "output": "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/task4.dir/Graphics/Color/Color.cpp.o"
+},
+{
+  "directory": "/home/maksim/ood/lab2/task1/cmake-build-debug",
+  "command": "/usr/bin/clang++ -g -std=c++26 -fcolor-diagnostics -o CMakeFiles/task4.dir/Graphics/Canvas/ICanvas/ICanvas.cpp.o -c /home/maksim/ood/lab2/task1/Graphics/Canvas/ICanvas/ICanvas.cpp",
+  "file": "/home/maksim/ood/lab2/task1/Graphics/Canvas/ICanvas/ICanvas.cpp",
+  "output": "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/task4.dir/Graphics/Canvas/ICanvas/ICanvas.cpp.o"
+},
+{
+  "directory": "/home/maksim/ood/lab2/task1/cmake-build-debug",
+  "command": "/usr/bin/clang++ -g -std=c++26 -fcolor-diagnostics -o CMakeFiles/task4.dir/Graphics/Canvas/CanvasSVG/CanvasSvg.cpp.o -c /home/maksim/ood/lab2/task1/Graphics/Canvas/CanvasSVG/CanvasSvg.cpp",
+  "file": "/home/maksim/ood/lab2/task1/Graphics/Canvas/CanvasSVG/CanvasSvg.cpp",
+  "output": "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/task4.dir/Graphics/Canvas/CanvasSVG/CanvasSvg.cpp.o"
+},
+{
+  "directory": "/home/maksim/ood/lab2/task1/cmake-build-debug",
+  "command": "/usr/bin/clang++ -g -std=c++26 -fcolor-diagnostics -o CMakeFiles/task4.dir/Picture/Picture.cpp.o -c /home/maksim/ood/lab2/task1/Picture/Picture.cpp",
+  "file": "/home/maksim/ood/lab2/task1/Picture/Picture.cpp",
+  "output": "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/task4.dir/Picture/Picture.cpp.o"
+},
+{
+  "directory": "/home/maksim/ood/lab2/task1/cmake-build-debug",
+  "command": "/usr/bin/clang++ -g -std=c++26 -fcolor-diagnostics -o CMakeFiles/task4.dir/InterfaceIO/UserInput/UserInput.cpp.o -c /home/maksim/ood/lab2/task1/InterfaceIO/UserInput/UserInput.cpp",
+  "file": "/home/maksim/ood/lab2/task1/InterfaceIO/UserInput/UserInput.cpp",
+  "output": "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/task4.dir/InterfaceIO/UserInput/UserInput.cpp.o"
+},
+{
+  "directory": "/home/maksim/ood/lab2/task1/cmake-build-debug",
+  "command": "/usr/bin/clang++ -g -std=c++26 -fcolor-diagnostics -o CMakeFiles/task4.dir/InterfaceIO/CommandParser/CommandParser.cpp.o -c /home/maksim/ood/lab2/task1/InterfaceIO/CommandParser/CommandParser.cpp",
+  "file": "/home/maksim/ood/lab2/task1/InterfaceIO/CommandParser/CommandParser.cpp",
+  "output": "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/task4.dir/InterfaceIO/CommandParser/CommandParser.cpp.o"
+},
+{
+  "directory": "/home/maksim/ood/lab2/task1/cmake-build-debug",
+  "command": "/usr/bin/clang++ -g -std=c++26 -fcolor-diagnostics -o CMakeFiles/task4_tests.dir/Tests/ShapeTests.cpp.o -c /home/maksim/ood/lab2/task1/Tests/ShapeTests.cpp",
+  "file": "/home/maksim/ood/lab2/task1/Tests/ShapeTests.cpp",
+  "output": "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/task4_tests.dir/Tests/ShapeTests.cpp.o"
+},
+{
+  "directory": "/home/maksim/ood/lab2/task1/cmake-build-debug",
+  "command": "/usr/bin/clang++ -g -std=c++26 -fcolor-diagnostics -o CMakeFiles/task4_tests.dir/Shape/IShape/IShape.cpp.o -c /home/maksim/ood/lab2/task1/Shape/IShape/IShape.cpp",
+  "file": "/home/maksim/ood/lab2/task1/Shape/IShape/IShape.cpp",
+  "output": "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/task4_tests.dir/Shape/IShape/IShape.cpp.o"
+},
+{
+  "directory": "/home/maksim/ood/lab2/task1/cmake-build-debug",
+  "command": "/usr/bin/clang++ -g -std=c++26 -fcolor-diagnostics -o CMakeFiles/task4_tests.dir/Shape/ShapeGeometry/ShapeGeometries/Circle/Circle.cpp.o -c /home/maksim/ood/lab2/task1/Shape/ShapeGeometry/ShapeGeometries/Circle/Circle.cpp",
+  "file": "/home/maksim/ood/lab2/task1/Shape/ShapeGeometry/ShapeGeometries/Circle/Circle.cpp",
+  "output": "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/task4_tests.dir/Shape/ShapeGeometry/ShapeGeometries/Circle/Circle.cpp.o"
+},
+{
+  "directory": "/home/maksim/ood/lab2/task1/cmake-build-debug",
+  "command": "/usr/bin/clang++ -g -std=c++26 -fcolor-diagnostics -o CMakeFiles/task4_tests.dir/Shape/ShapeGeometry/ShapeGeometries/Rectangle/Rectangle.cpp.o -c /home/maksim/ood/lab2/task1/Shape/ShapeGeometry/ShapeGeometries/Rectangle/Rectangle.cpp",
+  "file": "/home/maksim/ood/lab2/task1/Shape/ShapeGeometry/ShapeGeometries/Rectangle/Rectangle.cpp",
+  "output": "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/task4_tests.dir/Shape/ShapeGeometry/ShapeGeometries/Rectangle/Rectangle.cpp.o"
+},
+{
+  "directory": "/home/maksim/ood/lab2/task1/cmake-build-debug",
+  "command": "/usr/bin/clang++ -g -std=c++26 -fcolor-diagnostics -o CMakeFiles/task4_tests.dir/Shape/ShapeGeometry/ShapeGeometries/Triangle/Triangle.cpp.o -c /home/maksim/ood/lab2/task1/Shape/ShapeGeometry/ShapeGeometries/Triangle/Triangle.cpp",
+  "file": "/home/maksim/ood/lab2/task1/Shape/ShapeGeometry/ShapeGeometries/Triangle/Triangle.cpp",
+  "output": "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/task4_tests.dir/Shape/ShapeGeometry/ShapeGeometries/Triangle/Triangle.cpp.o"
+},
+{
+  "directory": "/home/maksim/ood/lab2/task1/cmake-build-debug",
+  "command": "/usr/bin/clang++ -g -std=c++26 -fcolor-diagnostics -o CMakeFiles/task4_tests.dir/Shape/ShapeGeometry/ShapeGeometries/Line/Line.cpp.o -c /home/maksim/ood/lab2/task1/Shape/ShapeGeometry/ShapeGeometries/Line/Line.cpp",
+  "file": "/home/maksim/ood/lab2/task1/Shape/ShapeGeometry/ShapeGeometries/Line/Line.cpp",
+  "output": "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/task4_tests.dir/Shape/ShapeGeometry/ShapeGeometries/Line/Line.cpp.o"
+},
+{
+  "directory": "/home/maksim/ood/lab2/task1/cmake-build-debug",
+  "command": "/usr/bin/clang++ -g -std=c++26 -fcolor-diagnostics -o CMakeFiles/task4_tests.dir/Shape/ShapeGeometry/ShapeGeometries/Text/Text.cpp.o -c /home/maksim/ood/lab2/task1/Shape/ShapeGeometry/ShapeGeometries/Text/Text.cpp",
+  "file": "/home/maksim/ood/lab2/task1/Shape/ShapeGeometry/ShapeGeometries/Text/Text.cpp",
+  "output": "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/task4_tests.dir/Shape/ShapeGeometry/ShapeGeometries/Text/Text.cpp.o"
+},
+{
+  "directory": "/home/maksim/ood/lab2/task1/cmake-build-debug",
+  "command": "/usr/bin/clang++ -g -std=c++26 -fcolor-diagnostics -o CMakeFiles/task4_tests.dir/Graphics/Color/Color.cpp.o -c /home/maksim/ood/lab2/task1/Graphics/Color/Color.cpp",
+  "file": "/home/maksim/ood/lab2/task1/Graphics/Color/Color.cpp",
+  "output": "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/task4_tests.dir/Graphics/Color/Color.cpp.o"
+},
+{
+  "directory": "/home/maksim/ood/lab2/task1/cmake-build-debug",
+  "command": "/usr/bin/clang++ -g -std=c++26 -fcolor-diagnostics -o CMakeFiles/task4_tests.dir/Graphics/Canvas/ICanvas/ICanvas.cpp.o -c /home/maksim/ood/lab2/task1/Graphics/Canvas/ICanvas/ICanvas.cpp",
+  "file": "/home/maksim/ood/lab2/task1/Graphics/Canvas/ICanvas/ICanvas.cpp",
+  "output": "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/task4_tests.dir/Graphics/Canvas/ICanvas/ICanvas.cpp.o"
+},
+{
+  "directory": "/home/maksim/ood/lab2/task1/cmake-build-debug",
+  "command": "/usr/bin/clang++ -g -std=c++26 -fcolor-diagnostics -o CMakeFiles/task4_tests.dir/Graphics/Canvas/CanvasSVG/CanvasSvg.cpp.o -c /home/maksim/ood/lab2/task1/Graphics/Canvas/CanvasSVG/CanvasSvg.cpp",
+  "file": "/home/maksim/ood/lab2/task1/Graphics/Canvas/CanvasSVG/CanvasSvg.cpp",
+  "output": "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/task4_tests.dir/Graphics/Canvas/CanvasSVG/CanvasSvg.cpp.o"
+},
+{
+  "directory": "/home/maksim/ood/lab2/task1/cmake-build-debug",
+  "command": "/usr/bin/clang++ -g -std=c++26 -fcolor-diagnostics -o CMakeFiles/task4_tests.dir/Picture/Picture.cpp.o -c /home/maksim/ood/lab2/task1/Picture/Picture.cpp",
+  "file": "/home/maksim/ood/lab2/task1/Picture/Picture.cpp",
+  "output": "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/task4_tests.dir/Picture/Picture.cpp.o"
+},
+{
+  "directory": "/home/maksim/ood/lab2/task1/cmake-build-debug",
+  "command": "/usr/bin/clang++ -g -std=c++26 -fcolor-diagnostics -o CMakeFiles/task4_tests.dir/Tests/ObserverTest.cpp.o -c /home/maksim/ood/lab2/task1/Tests/ObserverTest.cpp",
+  "file": "/home/maksim/ood/lab2/task1/Tests/ObserverTest.cpp",
+  "output": "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/task4_tests.dir/Tests/ObserverTest.cpp.o"
+}
+]

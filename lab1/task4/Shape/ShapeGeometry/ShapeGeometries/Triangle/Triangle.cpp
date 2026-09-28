@@ -34,3 +34,7 @@ std::string shapes::Triangle::GetShapeName() const {
 shapes::IShapeGeometry *shapes::Triangle::Clone() const {
     return new Triangle(*this);
 }
+
+shapes::IShapeGeometry *shapes::Triangle::CreateFrom(IShapeGeometry *shape) {
+    shape->GetParameters();
+}

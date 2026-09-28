@@ -1,0 +1,13 @@
+AddShape sky #87CEEB rectangle 0.0 0.0 800.0 600.0
+AddShape sun #FFD700 circle 150.0 120.0 50.0
+AddShape house #CD853F rectangle 300.0 350.0 200.0 150.0
+AddShape roof #8B0000 triangle 300.0 350.0 500.0 350.0 400.0 250.0
+AddShape door #4A2E12 rectangle 380.0 430.0 40.0 70.0
+AddShape window #ADD8E6 rectangle 330.0 380.0 40.0 40.0
+AddShape tree_trunk #8B4513 rectangle 620.0 400.0 30.0 100.0
+AddShape tree_leaves #228B22 circle 635.0 370.0 50.0
+AddShape ground #32CD32 line 0.0 500.0 800.0 500.0
+AddShape title #000000 text 50.0 560.0 24.0 My_First_Canvas
+List
+DrawPicture
+exit

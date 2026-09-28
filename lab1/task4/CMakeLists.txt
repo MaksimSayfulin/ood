@@ -1,12 +1,10 @@
 cmake_minimum_required(VERSION 3.15)
 project(task4 LANGUAGES CXX)
 
-# Задаем стандарт C++26 и требуем его обязательной поддержки
 set(CMAKE_CXX_STANDARD 26)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Добавляем наш исполняемый файл
 add_executable(task4 main.cpp
         Shape/ShapeGeometry/IShapeGeometry.h
         Tests/ShapeTests.cpp
