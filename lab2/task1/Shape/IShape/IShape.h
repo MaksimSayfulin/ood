@@ -1,8 +1,8 @@
 #pragma once
 #include <memory>
 #include <string>
+#include <boost/signals2/signal.hpp>
 #include "../ShapeGeometry/IShapeGeometry.h"
-#include "../../Observer/Event.h"
 
 namespace shapes {
     class IShape {
@@ -28,17 +28,17 @@ namespace shapes {
         void Move(double x, double y);
         void Draw(gfx::ICanvas &canvas) const;
 
-        Event<const IShape&, double, double>& OnMove();
-        Event<const IShape&, const gfx::Color&>& OnColorChanged();
-        Event<const IShape&, const IShapeGeometry&>& OnGeometryChanged();
+        boost::signals2::signal<void(const IShape&, double, double)>& OnMove();
+        boost::signals2::signal<void(const IShape&, const gfx::Color&)>& OnColorChanged();
+        boost::signals2::signal<void(const IShape&, const IShapeGeometry&)>& OnGeometryChanged();
 
     private:
         std::string m_id;
         gfx::Color m_color;
         std::unique_ptr<IShapeGeometry> m_geometry;
 
-        Event<const IShape&, double, double> m_moveEvent;
-        Event<const IShape&, const gfx::Color&> m_colorChangedEvent;
-        Event<const IShape&, const IShapeGeometry&> m_geometryChangedEvent;
+        boost::signals2::signal<void(const IShape&, double, double)> m_moveEvent;
+        boost::signals2::signal<void(const IShape&, const gfx::Color&)> m_colorChangedEvent;
+        boost::signals2::signal<void(const IShape&, const IShapeGeometry&)> m_geometryChangedEvent;
     };
 }

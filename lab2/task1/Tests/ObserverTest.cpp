@@ -1,10 +1,30 @@
 #include <sstream>
+#include <string>
+#include <vector>
+#include <boost/signals2/connection.hpp>
 #include "../Catch/Catch.hpp"
-#include "../Observer/Event.h"
 #include "../Picture/Picture.h"
 
 #include "../Shape/ShapeGeometry/ShapeGeometries/Circle/Circle.h"
 #include "../Shape/ShapeGeometry/ShapeGeometries/Rectangle/Rectangle.h"
+
+namespace {
+    struct CallLog {
+        std::string order;
+
+        void Add(const std::string& entry) {
+            order += entry;
+        }
+    };
+
+    shapes::IShape MakeCircleShape(const std::string& id = "1") {
+        return {id, gfx::Color("#F0F0F0"), std::make_unique<shapes::Circle>(10, 100, 100)};
+    }
+
+    shapes::IShape MakeRectangleShape(const std::string& id = "2") {
+        return {id, gfx::Color("#F0F0F0"), std::make_unique<shapes::Rectangle>(100, 100, 100, 100)};
+    }
+}
 
 TEST_CASE("Обработчик события добавления фигуры вызывается при добавлении фигуры") {
     std::ostringstream svg;
@@ -12,15 +32,12 @@ TEST_CASE("Обработчик события добавления фигуры
     shapes::Picture picture(canvas);
 
     int addCount = 0;
-    auto sub = picture.SubscribeToShapeAdded([&addCount](const shapes::IShape&) {
+    boost::signals2::scoped_connection sub = picture.OnShapeAdded().connect([&addCount](const shapes::IShape&) {
         addCount++;
     });
 
-    shapes::Circle circle(10, 100, 100);
-    shapes::IShape circleShape("1", gfx::Color("#F0F0F0"), std::make_unique<shapes::Circle>(circle));
-    
-    REQUIRE(addCount == 0);
-    picture.AddShape(circleShape);
+    picture.AddShape(MakeCircleShape());
+
     REQUIRE(addCount == 1);
 }
 
@@ -31,16 +48,14 @@ TEST_CASE("Обработчик добавления фигуры не вызы�
 
     int addCount = 0;
     int moveCount = 0;
-    auto sub1 = picture.SubscribeToShapeAdded([&addCount](const shapes::IShape&) {
+    boost::signals2::scoped_connection sub1 = picture.OnShapeAdded().connect([&addCount](const shapes::IShape&) {
         addCount++;
     });
-    auto sub2 = picture.SubscribeToShapeMoved([&moveCount](const shapes::IShape&, double, double) {
+    boost::signals2::scoped_connection sub2 = picture.OnShapeMoved().connect([&moveCount](const shapes::IShape&, double, double) {
         moveCount++;
     });
 
-    shapes::Circle circle(10, 100, 100);
-    shapes::IShape circleShape("1", gfx::Color("#F0F0F0"), std::make_unique<shapes::Circle>(circle));
-    picture.AddShape(circleShape);
+    picture.AddShape(MakeCircleShape());
 
     REQUIRE(addCount == 1);
     REQUIRE(moveCount == 0);
@@ -57,16 +72,13 @@ TEST_CASE("Обработчик перемещения получает необ
 
     shapes::IShape* movedShape = nullptr;
     double dxReceived = 0, dyReceived = 0;
-    auto sub = picture.SubscribeToShapeMoved([&](const shapes::IShape& shape, double dx, double dy) {
+    boost::signals2::scoped_connection sub = picture.OnShapeMoved().connect([&](const shapes::IShape& shape, double dx, double dy) {
         movedShape = const_cast<shapes::IShape*>(&shape);
         dxReceived = dx;
         dyReceived = dy;
     });
 
-    shapes::Circle circle(10, 100, 100);
-    shapes::IShape circleShape("1", gfx::Color("#F0F0F0"), std::make_unique<shapes::Circle>(circle));
-    picture.AddShape(circleShape);
-
+    picture.AddShape(MakeCircleShape());
     picture.MoveShape("1", 15.5, -20.0);
 
     REQUIRE(movedShape != nullptr);
@@ -81,14 +93,12 @@ TEST_CASE("Один объект может одновременно реаги�
     shapes::Picture picture(canvas);
 
     int addCount = 0, moveCount = 0, colorCount = 0;
-    
-    auto sub1 = picture.SubscribeToShapeAdded([&](const shapes::IShape&) { addCount++; });
-    auto sub2 = picture.SubscribeToShapeMoved([&](const shapes::IShape&, double, double) { moveCount++; });
-    auto sub3 = picture.SubscribeToShapeColorChanged([&](const shapes::IShape&, const gfx::Color&) { colorCount++; });
 
-    shapes::Circle circle(10, 100, 100);
-    shapes::IShape circleShape("1", gfx::Color("#F0F0F0"), std::make_unique<shapes::Circle>(circle));
-    picture.AddShape(circleShape);
+    boost::signals2::scoped_connection sub1 = picture.OnShapeAdded().connect([&](const shapes::IShape&) { addCount++; });
+    boost::signals2::scoped_connection sub2 = picture.OnShapeMoved().connect([&](const shapes::IShape&, double, double) { moveCount++; });
+    boost::signals2::scoped_connection sub3 = picture.OnShapeColorChanged().connect([&](const shapes::IShape&, const gfx::Color&) { colorCount++; });
+
+    picture.AddShape(MakeCircleShape());
 
     REQUIRE(addCount == 1);
     REQUIRE(moveCount == 0);
@@ -111,15 +121,28 @@ TEST_CASE("На один тип события можно подписать н�
     shapes::Picture picture(canvas);
 
     int count1 = 0, count2 = 0;
-    auto sub1 = picture.SubscribeToShapeAdded([&](const shapes::IShape&) { count1++; });
-    auto sub2 = picture.SubscribeToShapeAdded([&](const shapes::IShape&) { count2++; });
+    boost::signals2::scoped_connection sub1 = picture.OnShapeAdded().connect([&](const shapes::IShape&) { count1++; });
+    boost::signals2::scoped_connection sub2 = picture.OnShapeAdded().connect([&](const shapes::IShape&) { count2++; });
 
-    shapes::Circle circle(10, 100, 100);
-    shapes::IShape circleShape("1", gfx::Color("#F0F0F0"), std::make_unique<shapes::Circle>(circle));
-    picture.AddShape(circleShape);
+    picture.AddShape(MakeCircleShape());
 
     REQUIRE(count1 == 1);
     REQUIRE(count2 == 1);
+}
+
+TEST_CASE("Обработчики одного сигнала вызываются в порядке подключения") {
+    std::ostringstream svg;
+    gfx::CanvasSvg canvas(svg);
+    shapes::Picture picture(canvas);
+
+    CallLog log;
+    picture.OnShapeAdded().connect([&](const shapes::IShape&) { log.Add("a"); });
+    picture.OnShapeAdded().connect([&](const shapes::IShape&) { log.Add("b"); });
+    picture.OnShapeAdded().connect([&](const shapes::IShape&) { log.Add("c"); });
+
+    picture.AddShape(MakeCircleShape());
+
+    REQUIRE(log.order == "abc");
 }
 
 TEST_CASE("Подписки разных типов событий отключаются независимо друг от друга") {
@@ -128,24 +151,80 @@ TEST_CASE("Подписки разных типов событий отключ�
     shapes::Picture picture(canvas);
 
     int addCount = 0, moveCount = 0;
-    auto sub1 = picture.SubscribeToShapeAdded([&](const shapes::IShape&) { addCount++; });
-    auto sub2 = picture.SubscribeToShapeMoved([&](const shapes::IShape&, double, double) { moveCount++; });
+    boost::signals2::scoped_connection sub1 = picture.OnShapeAdded().connect([&](const shapes::IShape&) { addCount++; });
+    boost::signals2::scoped_connection sub2 = picture.OnShapeMoved().connect([&](const shapes::IShape&, double, double) { moveCount++; });
 
-    shapes::Circle circle(10, 100, 100);
-    shapes::IShape circleShape("1", gfx::Color("#F0F0F0"), std::make_unique<shapes::Circle>(circle));
-    picture.AddShape(circleShape);
+    picture.AddShape(MakeCircleShape());
 
     REQUIRE(addCount == 1);
     REQUIRE(moveCount == 0);
 
-    sub1.Disconnect();
+    sub1.disconnect();
 
-    shapes::IShape rectangle("2", gfx::Color("#F0F0F0"), std::make_unique<shapes::Rectangle>(100, 100, 100, 100));
-    picture.AddShape(rectangle);
+    picture.AddShape(MakeRectangleShape());
     picture.MoveShape("1", 10, 10);
 
     REQUIRE(addCount == 1);
     REQUIRE(moveCount == 1);
+}
+
+TEST_CASE("Отключённый обработчик больше не вызывается") {
+    std::ostringstream svg;
+    gfx::CanvasSvg canvas(svg);
+    shapes::Picture picture(canvas);
+
+    int count = 0;
+    boost::signals2::scoped_connection sub = picture.OnShapeAdded().connect([&](const shapes::IShape&) { count++; });
+
+    picture.AddShape(MakeCircleShape());
+    REQUIRE(count == 1);
+
+    sub.disconnect();
+    REQUIRE_FALSE(sub.connected());
+
+    picture.AddShape(MakeRectangleShape());
+    REQUIRE(count == 1);
+}
+
+TEST_CASE("scoped_connection отключает обработчик при выходе из области видимости") {
+    std::ostringstream svg;
+    gfx::CanvasSvg canvas(svg);
+    shapes::Picture picture(canvas);
+
+    int count = 0;
+    {
+        boost::signals2::scoped_connection sub =
+            picture.OnShapeAdded().connect([&](const shapes::IShape&) { count++; });
+
+        picture.AddShape(MakeCircleShape());
+        REQUIRE(count == 1);
+        REQUIRE(sub.connected());
+    }
+
+    picture.AddShape(MakeRectangleShape());
+    REQUIRE(count == 1);
+}
+
+TEST_CASE("Уничтожение объекта, управляющего подпиской, не оставляет некорректного соединения") {
+    std::ostringstream svg;
+    gfx::CanvasSvg canvas(svg);
+    shapes::Picture picture(canvas);
+
+    int count = 0;
+    {
+        struct Listener {
+            explicit Listener(shapes::Picture& picture, int& counter)
+                : m_sub(picture.OnShapeAdded().connect([&counter](const shapes::IShape&) { counter++; })) {}
+
+            boost::signals2::scoped_connection m_sub;
+        } listener(picture, count);
+
+        picture.AddShape(MakeCircleShape());
+        REQUIRE(count == 1);
+    }
+
+    picture.AddShape(MakeRectangleShape());
+    REQUIRE(count == 1);
 }
 
 TEST_CASE("RAII-объект подписки корректно работает для каждого типа события") {
@@ -156,14 +235,12 @@ TEST_CASE("RAII-объект подписки корректно работае�
     int addCount = 0, moveCount = 0, colorCount = 0, removeCount = 0;
 
     {
-        auto sub1 = picture.SubscribeToShapeAdded([&](const shapes::IShape&) { addCount++; });
-        auto sub2 = picture.SubscribeToShapeMoved([&](const shapes::IShape&, double, double) { moveCount++; });
-        auto sub3 = picture.SubscribeToShapeColorChanged([&](const shapes::IShape&, const gfx::Color&) { colorCount++; });
-        auto sub4 = picture.SubscribeToShapeRemoved([&](const shapes::IShape&) { removeCount++; });
+        boost::signals2::scoped_connection sub1 = picture.OnShapeAdded().connect([&](const shapes::IShape&) { addCount++; });
+        boost::signals2::scoped_connection sub2 = picture.OnShapeMoved().connect([&](const shapes::IShape&, double, double) { moveCount++; });
+        boost::signals2::scoped_connection sub3 = picture.OnShapeColorChanged().connect([&](const shapes::IShape&, const gfx::Color&) { colorCount++; });
+        boost::signals2::scoped_connection sub4 = picture.OnShapeRemoved().connect([&](const shapes::IShape&) { removeCount++; });
 
-        shapes::Circle circle(10, 100, 100);
-        shapes::IShape circleShape("1", gfx::Color("#F0F0F0"), std::make_unique<shapes::Circle>(circle));
-        picture.AddShape(circleShape);
+        picture.AddShape(MakeCircleShape());
 
         REQUIRE(addCount == 1);
         REQUIRE(moveCount == 0);
@@ -180,43 +257,55 @@ TEST_CASE("RAII-объект подписки корректно работае�
         REQUIRE(removeCount == 1);
     }
 
-    shapes::IShape rectangle("2", gfx::Color("#F0F0F0"), std::make_unique<shapes::Rectangle>(100, 100, 100, 100));
-    picture.AddShape(rectangle);
+    picture.AddShape(MakeRectangleShape());
     REQUIRE(addCount == 1);
 }
 
-TEST_CASE("Отключение обработчика во время рассылки сохраняет семантику предыдущих заданий") {
+TEST_CASE("Обработчик может отключить собственную подписку во время рассылки") {
     std::ostringstream svg;
     gfx::CanvasSvg canvas(svg);
     shapes::Picture picture(canvas);
 
     int count1 = 0, count2 = 0;
-    
-    std::function<void(const shapes::IShape&)> handler1;
-    EventSubscription<const shapes::IShape&> sub1;
-    
-    handler1 = [&](const shapes::IShape&) {
+
+    boost::signals2::scoped_connection sub1;
+    sub1 = picture.OnShapeAdded().connect([&](const shapes::IShape&) {
         count1++;
         if (count1 == 1) {
-            sub1.Disconnect();
+            sub1.disconnect();
         }
-    };
-    
-    sub1 = picture.SubscribeToShapeAdded(handler1);
-    auto sub2 = picture.SubscribeToShapeAdded([&](const shapes::IShape&) { count2++; });
+    });
+    boost::signals2::scoped_connection sub2 = picture.OnShapeAdded().connect([&](const shapes::IShape&) { count2++; });
 
-    shapes::Circle circle(10, 100, 100);
-    shapes::IShape circleShape("1", gfx::Color("#F0F0F0"), std::make_unique<shapes::Circle>(circle));
-    picture.AddShape(circleShape);
+    picture.AddShape(MakeCircleShape());
 
     REQUIRE(count1 == 1);
     REQUIRE(count2 == 1);
 
-    shapes::IShape rectangle("2", gfx::Color("#F0F0F0"), std::make_unique<shapes::Rectangle>(100, 100, 100, 100));
-    picture.AddShape(rectangle);
+    picture.AddShape(MakeRectangleShape());
 
     REQUIRE(count1 == 1);
     REQUIRE(count2 == 2);
+}
+
+TEST_CASE("Обработчик может отключить другой, ещё не вызванный обработчик во время рассылки") {
+    std::ostringstream svg;
+    gfx::CanvasSvg canvas(svg);
+    shapes::Picture picture(canvas);
+
+    CallLog log;
+
+    boost::signals2::scoped_connection second;
+    picture.OnShapeAdded().connect([&](const shapes::IShape&) {
+        log.Add("first");
+        second.disconnect();
+    });
+    second = picture.OnShapeAdded().connect([&](const shapes::IShape&) { log.Add("second"); });
+    picture.OnShapeAdded().connect([&](const shapes::IShape&) { log.Add("third"); });
+
+    picture.AddShape(MakeCircleShape());
+
+    REQUIRE(log.order == "firstthird");
 }
 
 TEST_CASE("Добавление обработчика во время рассылки начинает действовать только со следующего события") {
@@ -225,26 +314,23 @@ TEST_CASE("Добавление обработчика во время расс�
     shapes::Picture picture(canvas);
 
     int count1 = 0, count2 = 0;
-    std::vector<EventSubscription<const shapes::IShape&>> subscriptions;
-    
-    auto sub1 = picture.SubscribeToShapeAdded([&](const shapes::IShape&) {
+    std::vector<boost::signals2::scoped_connection> subscriptions;
+
+    boost::signals2::scoped_connection sub1 = picture.OnShapeAdded().connect([&](const shapes::IShape&) {
         count1++;
         if (count1 == 1) {
-            subscriptions.push_back(picture.SubscribeToShapeAdded([&](const shapes::IShape&) {
+            subscriptions.emplace_back(picture.OnShapeAdded().connect([&](const shapes::IShape&) {
                 count2++;
             }));
         }
     });
 
-    shapes::Circle circle(10, 100, 100);
-    shapes::IShape circleShape("1", gfx::Color("#F0F0F0"), std::make_unique<shapes::Circle>(circle));
-    picture.AddShape(circleShape);
+    picture.AddShape(MakeCircleShape());
 
     REQUIRE(count1 == 1);
     REQUIRE(count2 == 0);
 
-    shapes::IShape rectangle("2", gfx::Color("#F0F0F0"), std::make_unique<shapes::Rectangle>(100, 100, 100, 100));
-    picture.AddShape(rectangle);
+    picture.AddShape(MakeRectangleShape());
 
     REQUIRE(count1 == 2);
     REQUIRE(count2 == 1);
@@ -255,23 +341,71 @@ TEST_CASE("Изменение Shape напрямую приводит к соо�
     gfx::CanvasSvg canvas(svg);
     shapes::Picture picture(canvas);
 
-    int moveCount = 0, colorCount = 0;
-    auto sub1 = picture.SubscribeToShapeMoved([&](const shapes::IShape&, double, double) { moveCount++; });
-    auto sub2 = picture.SubscribeToShapeColorChanged([&](const shapes::IShape&, const gfx::Color&) { colorCount++; });
+    int moveCount = 0, colorCount = 0, geometryCount = 0;
+    boost::signals2::scoped_connection sub1 = picture.OnShapeMoved().connect([&](const shapes::IShape&, double, double) { moveCount++; });
+    boost::signals2::scoped_connection sub2 = picture.OnShapeColorChanged().connect([&](const shapes::IShape&, const gfx::Color&) { colorCount++; });
+    boost::signals2::scoped_connection sub3 = picture.OnShapeGeometryChanged().connect([&](const shapes::IShape&, const shapes::IShapeGeometry&) { geometryCount++; });
 
-    shapes::Circle circle(10, 100, 100);
-    shapes::IShape circleShape("1", gfx::Color("#F0F0F0"), std::make_unique<shapes::Circle>(circle));
-    picture.AddShape(circleShape);
+    picture.AddShape(MakeCircleShape());
 
     REQUIRE(moveCount == 0);
     REQUIRE(colorCount == 0);
+    REQUIRE(geometryCount == 0);
 
     auto& shape = picture.GetShape("1");
     shape.Move(10, 10);
     shape.SetColor(gfx::Color("#FF0000"));
+    shape.SetGeometry(std::make_unique<shapes::Rectangle>(10, 10, 20, 20));
 
     REQUIRE(moveCount == 1);
     REQUIRE(colorCount == 1);
+    REQUIRE(geometryCount == 1);
+}
+
+TEST_CASE("Подписки переживают перевыделение памяти при добавлении фигур") {
+    std::ostringstream svg;
+    gfx::CanvasSvg canvas(svg);
+    shapes::Picture picture(canvas);
+
+    int colorCount = 0;
+    std::string lastId;
+    boost::signals2::scoped_connection sub = picture.OnShapeColorChanged().connect(
+        [&](const shapes::IShape& shape, const gfx::Color&) {
+            colorCount++;
+            lastId = shape.GetId();
+        }
+    );
+
+    constexpr int shapeCount = 50;
+    for (int i = 0; i < shapeCount; ++i) {
+        picture.AddShape(MakeCircleShape("shape" + std::to_string(i)));
+    }
+    REQUIRE(picture.GetShapesCount() == shapeCount);
+
+    for (int i = 0; i < shapeCount; ++i) {
+        picture.ChangeColor("shape" + std::to_string(i), gfx::Color("#FF0000"));
+    }
+
+    REQUIRE(colorCount == shapeCount);
+    REQUIRE(lastId == "shape" + std::to_string(shapeCount - 1));
+}
+
+TEST_CASE("Перемещение всего рисунка порождает по одному событию перемещения на каждую фигуру") {
+    std::ostringstream svg;
+    gfx::CanvasSvg canvas(svg);
+    shapes::Picture picture(canvas);
+
+    CallLog log;
+    boost::signals2::scoped_connection sub = picture.OnShapeMoved().connect([&](const shapes::IShape& shape, double, double) {
+        log.Add(shape.GetId());
+    });
+
+    picture.AddShape(MakeCircleShape());
+    picture.AddShape(MakeRectangleShape());
+
+    picture.MovePicture(5, 5);
+
+    REQUIRE(log.order == "12");
 }
 
 TEST_CASE("Обработчик события удаления фигуры вызывается при удалении фигуры") {
@@ -281,14 +415,12 @@ TEST_CASE("Обработчик события удаления фигуры в�
 
     int removeCount = 0;
     shapes::IShape* removedShape = nullptr;
-    auto sub = picture.SubscribeToShapeRemoved([&](const shapes::IShape& shape) {
+    boost::signals2::scoped_connection sub = picture.OnShapeRemoved().connect([&](const shapes::IShape& shape) {
         removeCount++;
         removedShape = const_cast<shapes::IShape*>(&shape);
     });
 
-    shapes::Circle circle(10, 100, 100);
-    shapes::IShape circleShape("1", gfx::Color("#F0F0F0"), std::make_unique<shapes::Circle>(circle));
-    picture.AddShape(circleShape);
+    picture.AddShape(MakeCircleShape());
 
     REQUIRE(removeCount == 0);
     picture.DeleteShape("1");
@@ -304,14 +436,12 @@ TEST_CASE("Обработчик события изменения цвета в�
 
     int colorCount = 0;
     gfx::Color receivedColor{"#000000"};
-    auto sub = picture.SubscribeToShapeColorChanged([&](const shapes::IShape&, const gfx::Color& color) {
+    boost::signals2::scoped_connection sub = picture.OnShapeColorChanged().connect([&](const shapes::IShape&, const gfx::Color& color) {
         colorCount++;
         receivedColor = color;
     });
 
-    shapes::Circle circle(10, 100, 100);
-    shapes::IShape circleShape("1", gfx::Color("#F0F0F0"), std::make_unique<shapes::Circle>(circle));
-    picture.AddShape(circleShape);
+    picture.AddShape(MakeCircleShape());
 
     REQUIRE(colorCount == 0);
     picture.ChangeColor("1", gfx::Color("#FF0000"));
@@ -325,15 +455,92 @@ TEST_CASE("Обработчик события изменения геометр
     shapes::Picture picture(canvas);
 
     int geomCount = 0;
-    auto sub = picture.SubscribeToShapeGeometryChanged([&](const shapes::IShape&, const shapes::IShapeGeometry&) {
+    std::string receivedName;
+    boost::signals2::scoped_connection sub = picture.OnShapeGeometryChanged().connect([&](const shapes::IShape&, const shapes::IShapeGeometry& geometry) {
         geomCount++;
+        receivedName = geometry.GetShapeName();
     });
 
-    shapes::Circle circle(10, 100, 100);
-    shapes::IShape circleShape("1", gfx::Color("#F0F0F0"), std::make_unique<shapes::Circle>(circle));
-    picture.AddShape(circleShape);
+    picture.AddShape(MakeCircleShape());
 
     REQUIRE(geomCount == 0);
     picture.ChangeShape("1", std::make_unique<shapes::Rectangle>(100, 100, 50, 50));
     REQUIRE(geomCount == 1);
+    REQUIRE(receivedName == "rectangle");
+}
+
+TEST_CASE("После удаления фигуры её события больше не сообщают о себе Picture") {
+    std::ostringstream svg;
+    gfx::CanvasSvg canvas(svg);
+    shapes::Picture picture(canvas);
+
+    int moveCount = 0, removedCount = 0;
+    boost::signals2::scoped_connection sub1 = picture.OnShapeMoved().connect([&](const shapes::IShape&, double, double) { moveCount++; });
+    boost::signals2::scoped_connection sub2 = picture.OnShapeRemoved().connect([&](const shapes::IShape&) { removedCount++; });
+
+    picture.AddShape(MakeCircleShape());
+    picture.MoveShape("1", 5, 5);
+    REQUIRE(moveCount == 1);
+
+    picture.DeleteShape("1");
+    REQUIRE(removedCount == 1);
+
+    picture.AddShape(MakeRectangleShape());
+    picture.MoveShape("2", 5, 5);
+    REQUIRE(moveCount == 2);
+}
+
+TEST_CASE("Разные экземпляры Picture имеют независимые наборы обработчиков") {
+    std::ostringstream svg;
+    gfx::CanvasSvg canvas(svg);
+    shapes::Picture first(canvas);
+    shapes::Picture second(canvas);
+
+    int firstCount = 0, secondCount = 0;
+    auto sub1 = first.OnShapeAdded().connect([&](const shapes::IShape&) { firstCount++; });
+
+    second.AddShape(MakeCircleShape());
+
+    REQUIRE(firstCount == 0);
+    REQUIRE(secondCount == 0);
+
+    first.AddShape(MakeCircleShape());
+    REQUIRE(firstCount == 1);
+    REQUIRE(secondCount == 0);
+}
+
+TEST_CASE("Копия Picture не наследует подписки внешних обработчиков") {
+    std::ostringstream svg;
+    gfx::CanvasSvg canvas(svg);
+    shapes::Picture original(canvas);
+
+    int originalCount = 0, copyCount = 0;
+    auto sub = original.OnShapeAdded().connect([&](const shapes::IShape&) { originalCount++; });
+
+    shapes::Picture copy(original);
+    auto sub2 = copy.OnShapeAdded().connect([&](const shapes::IShape&) { copyCount++; });
+
+    copy.AddShape(MakeCircleShape("copy1"));
+
+    REQUIRE(copyCount == 1);
+    REQUIRE(originalCount == 0);
+
+    original.AddShape(MakeCircleShape());
+    REQUIRE(originalCount == 1);
+    REQUIRE(copyCount == 1);
+}
+
+TEST_CASE("Изменения фигуры в копии Picture не приводят к событиям оригинала") {
+    std::ostringstream svg;
+    gfx::CanvasSvg canvas(svg);
+    shapes::Picture original(canvas);
+    original.AddShape(MakeCircleShape());
+
+    shapes::Picture copy(original);
+
+    int copyMoveCount = 0;
+    auto sub = copy.OnShapeMoved().connect([&](const shapes::IShape&, double, double) { copyMoveCount++; });
+
+    copy.MoveShape("1", 3, 4);
+    REQUIRE(copyMoveCount == 1);
 }

@@ -2,9 +2,10 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <boost/signals2/connection.hpp>
+#include <boost/signals2/signal.hpp>
 
 #include "../Graphics/Canvas/ICanvas/ICanvas.h"
-#include "../Observer/Event.h"
 #include "../Shape/IShape/IShape.h"
 #include "../Shape/ShapeGeometry/IShapeGeometry.h"
 
@@ -14,7 +15,7 @@ namespace shapes {
         explicit Picture(gfx::ICanvas &canvas);
         Picture(const Picture& other);
 
-        ~Picture();
+        ~Picture() = default;
 
         void AddShape(const std::string& id, const gfx::Color& color, std::unique_ptr<IShapeGeometry> geometry);
         void AddShape(const IShape &shape);
@@ -27,34 +28,38 @@ namespace shapes {
         void ChangeColor(const std::string &id, const gfx::Color &color);
         void ChangeShape(const std::string &id, std::unique_ptr<IShapeGeometry> geometry);
 
-        void DrawShape(const std::string &id);
+        void DrawShape(const std::string& id);
         void DrawPicture() const;
 
         [[nodiscard]] size_t GetShapesCount() const;
         [[nodiscard]] IShape& GetShape(const std::string& id);
 
-        EventSubscription<const IShape&> SubscribeToShapeAdded(std::function<void(const IShape&)> handler);
-        EventSubscription<const IShape&> SubscribeToShapeRemoved(std::function<void(const IShape&)> handler);
-        EventSubscription<const IShape&, double, double> SubscribeToShapeMoved(std::function<void(const IShape&, double, double)> handler);
-        EventSubscription<const IShape&, const gfx::Color&> SubscribeToShapeColorChanged(std::function<void(const IShape&, const gfx::Color&)> handler);
-        EventSubscription<const IShape&, const IShapeGeometry&> SubscribeToShapeGeometryChanged(std::function<void(const IShape&, const IShapeGeometry&)> handler);
+        boost::signals2::signal<void(const IShape&)>& OnShapeAdded();
+        boost::signals2::signal<void(const IShape&)>& OnShapeRemoved();
+        boost::signals2::signal<void(const IShape&, double, double)>& OnShapeMoved();
+        boost::signals2::signal<void(const IShape&, const gfx::Color&)>& OnShapeColorChanged();
+        boost::signals2::signal<void(const IShape&, const IShapeGeometry&)>& OnShapeGeometryChanged();
 
     private:
+        struct ShapeSubscriptions {
+            boost::signals2::scoped_connection moved;
+            boost::signals2::scoped_connection colorChanged;
+            boost::signals2::scoped_connection geometryChanged;
+        };
+
         gfx::ICanvas& m_canvas;
         std::vector<IShape> m_shapes;
 
-        Event<const IShape&> m_shapeAddedEvent;
-        Event<const IShape&> m_shapeRemovedEvent; // Вернуть только то, что нужно
-        Event<const IShape&, double, double> m_shapeMovedEvent;
-        Event<const IShape&, const gfx::Color&> m_shapeColorChangedEvent;
-        Event<const IShape&, const IShapeGeometry&> m_shapeGeometryChangedEvent;
+        boost::signals2::signal<void(const IShape&)> m_shapeAddedEvent;
+        boost::signals2::signal<void(const IShape&)> m_shapeRemovedEvent;
+        boost::signals2::signal<void(const IShape&, double, double)> m_shapeMovedEvent;
+        boost::signals2::signal<void(const IShape&, const gfx::Color&)> m_shapeColorChangedEvent;
+        boost::signals2::signal<void(const IShape&, const IShapeGeometry&)> m_shapeGeometryChangedEvent;
 
-        std::vector<EventSubscription<const IShape&, double, double>> m_shapeMoveSubscriptions;
-        std::vector<EventSubscription<const IShape&, const gfx::Color&>> m_shapeColorSubscriptions;
-        std::vector<EventSubscription<const IShape&, const IShapeGeometry&>> m_shapeGeometrySubscriptions;
+        std::vector<ShapeSubscriptions> m_shapeSubscriptions;
 
         IShape* FindShape(const std::string& id);
-        void SubscribeToShapeEvents(IShape& shape);
-        void UnsubscribeFromShapeEvents(IShape& shape);
+        [[nodiscard]] size_t FindShapeIndex(const std::string& id) const;
+        [[nodiscard]] ShapeSubscriptions SubscribeToShapeEvents(IShape& shape);
     };
 }

@@ -1227,3 +1227,1160 @@ events:
       Running the CXX compiler's linker: "/usr/bin/ld" "-v"
       GNU ld (GNU Binutils) 2.47
 ...
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineSystem.cmake:218 (message)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      The system is: Linux - 7.2.10-1-cachyos - x86_64
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:501 (find_file)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:538 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "file"
+    variable: "src_in"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "CMakeCXXCompilerId.cpp.in"
+    candidate_directories:
+      - "/usr/share/cmake/Modules/"
+    found: "/usr/share/cmake/Modules/CMakeCXXCompilerId.cpp.in"
+    search_context:
+      ENV{PATH}:
+        - "/home/linuxbrew/.linuxbrew/bin"
+        - "/home/linuxbrew/.linuxbrew/sbin"
+        - "/usr/lib/ccache/bin/"
+        - "/home/maksim/.cargo/bin/"
+        - "/home/maksim/.local/bin/"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+        - "/home/maksim/.local/bin"
+        - "/home/maksim/.local/bin"
+        - "/home/maksim/.local/bin"
+        - "/opt/clion/bin/ninja/linux/x64"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: /usr/bin/clang++ 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
+      
+      The CXX compiler identification is Clang, found in:
+        /home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/4.4.4/CompilerIdCXX/a.out
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:123 (try_compile)"
+      - "/usr/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-c7tvWs"
+      binary: "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-c7tvWs"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_CXX_SCAN_FOR_MODULES: "OFF"
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: false
+      stdout: |
+        Change Dir: '/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-c7tvWs'
+        
+        Run Build Command(s): /opt/clion/bin/ninja/linux/x64/ninja -v cmTC_f6c3d
+        [1/2] /usr/bin/clang++   -fcolor-diagnostics   -v -MD -MT CMakeFiles/cmTC_f6c3d.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_f6c3d.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_f6c3d.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+        clang version 23.1.3
+        Target: x86_64-pc-linux-gnu
+        Thread model: posix
+        InstalledDir: /usr/bin
+        Found candidate GCC installation: /usr/bin/../lib/gcc/x86_64-pc-linux-gnu/16
+        Found candidate GCC installation: /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16
+        Selected GCC installation: /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16
+        Candidate multilib: .;@m64
+        Candidate multilib: 32;@m32
+        Selected multilib: .;@m64
+         (in-process)
+         "/usr/bin/clang-23" -cc1 -triple x86_64-pc-linux-gnu -emit-obj -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=all -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu x86-64 -tune-cpu generic -debugger-tuning=gdb -fdebug-compilation-dir=/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-c7tvWs -v -fcoverage-compilation-dir=/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-c7tvWs -resource-dir /usr/lib/clang/23 -dependency-file CMakeFiles/cmTC_f6c3d.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_f6c3d.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../include/c++/16 -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../include/c++/16/x86_64-pc-linux-gnu -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../include/c++/16/backward -internal-isystem /usr/lib/clang/23/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../x86_64-pc-linux-gnu/include -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdeprecated-macro -ferror-limit 19 -stack-protector 2 -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -fcolor-diagnostics -faddrsig -fdwarf2-cfi-asm -o CMakeFiles/cmTC_f6c3d.dir/CMakeCXXCompilerABI.cpp.o -x c++ /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+        clang -cc1 version 23.1.3 based upon LLVM 23.1.3 default target x86_64-pc-linux-gnu
+        ignoring nonexistent directory "/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../x86_64-pc-linux-gnu/include"
+        ignoring nonexistent directory "/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../include/c++/16
+         /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../include/c++/16/x86_64-pc-linux-gnu
+         /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../include/c++/16/backward
+         /usr/lib/clang/23/include
+         /usr/local/include
+         /usr/include
+        End of search list.
+        [2/2] : && /usr/bin/clang++  -v -Wl,-v CMakeFiles/cmTC_f6c3d.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_f6c3d   && :
+        clang version 23.1.3
+        Target: x86_64-pc-linux-gnu
+        Thread model: posix
+        InstalledDir: /usr/bin
+        Found candidate GCC installation: /usr/bin/../lib/gcc/x86_64-pc-linux-gnu/16
+        Found candidate GCC installation: /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16
+        Selected GCC installation: /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16
+        Candidate multilib: .;@m64
+        Candidate multilib: 32;@m32
+        Selected multilib: .;@m64
+         "/usr/bin/ld" --hash-style=gnu --build-id --eh-frame-hdr -m elf_x86_64 -pie -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_f6c3d /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../lib64/Scrt1.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../lib64/crti.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/crtbeginS.o -L/usr/lib/clang/23/lib/x86_64-pc-linux-gnu -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16 -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../lib64 -L/lib/../lib64 -L/usr/lib64 -L/lib -L/usr/lib -v CMakeFiles/cmTC_f6c3d.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/crtendS.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../lib64/crtn.o
+        GNU ld (GNU Binutils) 2.47
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:255 (message)"
+      - "/usr/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CXX implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../include/c++/16]
+          add: [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../include/c++/16/x86_64-pc-linux-gnu]
+          add: [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../include/c++/16/backward]
+          add: [/usr/lib/clang/23/include]
+          add: [/usr/local/include]
+          add: [/usr/include]
+        end of search list found
+        collapse include dir [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../include/c++/16] ==> [/usr/include/c++/16]
+        collapse include dir [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../include/c++/16/x86_64-pc-linux-gnu] ==> [/usr/include/c++/16/x86_64-pc-linux-gnu]
+        collapse include dir [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../include/c++/16/backward] ==> [/usr/include/c++/16/backward]
+        collapse include dir [/usr/lib/clang/23/include] ==> [/usr/lib/clang/23/include]
+        collapse include dir [/usr/local/include] ==> [/usr/local/include]
+        collapse include dir [/usr/include] ==> [/usr/include]
+        implicit include dirs: [/usr/include/c++/16;/usr/include/c++/16/x86_64-pc-linux-gnu;/usr/include/c++/16/backward;/usr/lib/clang/23/include;/usr/local/include;/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:291 (message)"
+      - "/usr/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|wild|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|wild))("|,| |$)]
+        ignore line: [Change Dir: '/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-c7tvWs']
+        ignore line: []
+        ignore line: [Run Build Command(s): /opt/clion/bin/ninja/linux/x64/ninja -v cmTC_f6c3d]
+        ignore line: [[1/2] /usr/bin/clang++   -fcolor-diagnostics   -v -MD -MT CMakeFiles/cmTC_f6c3d.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_f6c3d.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_f6c3d.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [clang version 23.1.3]
+        ignore line: [Target: x86_64-pc-linux-gnu]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /usr/bin]
+        ignore line: [Found candidate GCC installation: /usr/bin/../lib/gcc/x86_64-pc-linux-gnu/16]
+        ignore line: [Found candidate GCC installation: /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16]
+        ignore line: [Selected GCC installation: /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16]
+        ignore line: [Candidate multilib: .]
+        ignore line: [@m64]
+        ignore line: [Candidate multilib: 32]
+        ignore line: [@m32]
+        ignore line: [Selected multilib: .]
+        ignore line: [@m64]
+        ignore line: [ (in-process)]
+        ignore line: [ "/usr/bin/clang-23" -cc1 -triple x86_64-pc-linux-gnu -emit-obj -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=all -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu x86-64 -tune-cpu generic -debugger-tuning=gdb -fdebug-compilation-dir=/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-c7tvWs -v -fcoverage-compilation-dir=/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-c7tvWs -resource-dir /usr/lib/clang/23 -dependency-file CMakeFiles/cmTC_f6c3d.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_f6c3d.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../include/c++/16 -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../include/c++/16/x86_64-pc-linux-gnu -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../include/c++/16/backward -internal-isystem /usr/lib/clang/23/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../x86_64-pc-linux-gnu/include -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdeprecated-macro -ferror-limit 19 -stack-protector 2 -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -fcolor-diagnostics -faddrsig -fdwarf2-cfi-asm -o CMakeFiles/cmTC_f6c3d.dir/CMakeCXXCompilerABI.cpp.o -x c++ /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [clang -cc1 version 23.1.3 based upon LLVM 23.1.3 default target x86_64-pc-linux-gnu]
+        ignore line: [ignoring nonexistent directory "/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../x86_64-pc-linux-gnu/include"]
+        ignore line: [ignoring nonexistent directory "/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../include/c++/16]
+        ignore line: [ /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../include/c++/16/x86_64-pc-linux-gnu]
+        ignore line: [ /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../include/c++/16/backward]
+        ignore line: [ /usr/lib/clang/23/include]
+        ignore line: [ /usr/local/include]
+        ignore line: [ /usr/include]
+        ignore line: [End of search list.]
+        ignore line: [[2/2] : && /usr/bin/clang++  -v -Wl -v CMakeFiles/cmTC_f6c3d.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_f6c3d   && :]
+        ignore line: [clang version 23.1.3]
+        ignore line: [Target: x86_64-pc-linux-gnu]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /usr/bin]
+        ignore line: [Found candidate GCC installation: /usr/bin/../lib/gcc/x86_64-pc-linux-gnu/16]
+        ignore line: [Found candidate GCC installation: /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16]
+        ignore line: [Selected GCC installation: /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16]
+        ignore line: [Candidate multilib: .]
+        ignore line: [@m64]
+        ignore line: [Candidate multilib: 32]
+        ignore line: [@m32]
+        ignore line: [Selected multilib: .]
+        ignore line: [@m64]
+        link line: [ "/usr/bin/ld" --hash-style=gnu --build-id --eh-frame-hdr -m elf_x86_64 -pie -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_f6c3d /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../lib64/Scrt1.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../lib64/crti.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/crtbeginS.o -L/usr/lib/clang/23/lib/x86_64-pc-linux-gnu -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16 -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../lib64 -L/lib/../lib64 -L/usr/lib64 -L/lib -L/usr/lib -v CMakeFiles/cmTC_f6c3d.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/crtendS.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../lib64/crtn.o] ==> linker [/usr/bin/ld]
+        link line: [ "/usr/bin/ld" --hash-style=gnu --build-id --eh-frame-hdr -m elf_x86_64 -pie -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_f6c3d /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../lib64/Scrt1.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../lib64/crti.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/crtbeginS.o -L/usr/lib/clang/23/lib/x86_64-pc-linux-gnu -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16 -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../lib64 -L/lib/../lib64 -L/usr/lib64 -L/lib -L/usr/lib -v CMakeFiles/cmTC_f6c3d.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/crtendS.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../lib64/crtn.o] ==> linker architecture flags [-m;elf]
+        link line: [ "/usr/bin/ld" --hash-style=gnu --build-id --eh-frame-hdr -m elf_x86_64 -pie -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_f6c3d /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../lib64/Scrt1.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../lib64/crti.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/crtbeginS.o -L/usr/lib/clang/23/lib/x86_64-pc-linux-gnu -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16 -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../lib64 -L/lib/../lib64 -L/usr/lib64 -L/lib -L/usr/lib -v CMakeFiles/cmTC_f6c3d.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/crtendS.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../lib64/crtn.o]
+          arg [/usr/bin/ld] ==> ignore
+          arg [--hash-style=gnu] ==> ignore
+          arg [--build-id] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-m] ==> ignore
+          arg [elf_x86_64] ==> ignore
+          arg [-pie] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_f6c3d] ==> ignore
+          arg [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../lib64/Scrt1.o] ==> obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../lib64/Scrt1.o]
+          arg [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../lib64/crti.o] ==> obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../lib64/crti.o]
+          arg [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/crtbeginS.o] ==> obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/crtbeginS.o]
+          arg [-L/usr/lib/clang/23/lib/x86_64-pc-linux-gnu] ==> dir [/usr/lib/clang/23/lib/x86_64-pc-linux-gnu]
+          arg [-L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16] ==> dir [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16]
+          arg [-L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../lib64] ==> dir [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../lib64]
+          arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
+          arg [-L/usr/lib64] ==> dir [/usr/lib64]
+          arg [-L/lib] ==> dir [/lib]
+          arg [-L/usr/lib] ==> dir [/usr/lib]
+          arg [-v] ==> ignore
+          arg [CMakeFiles/cmTC_f6c3d.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [-lstdc++] ==> lib [stdc++]
+          arg [-lm] ==> lib [m]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lc] ==> lib [c]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/crtendS.o] ==> obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/crtendS.o]
+          arg [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../lib64/crtn.o] ==> obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../lib64/crtn.o]
+        linker tool for 'CXX': /usr/bin/ld -m;elf
+        collapse obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../lib64/Scrt1.o] ==> [/usr/lib64/Scrt1.o]
+        collapse obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../lib64/crti.o] ==> [/usr/lib64/crti.o]
+        collapse obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/crtbeginS.o] ==> [/usr/lib64/gcc/x86_64-pc-linux-gnu/16/crtbeginS.o]
+        collapse obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/crtendS.o] ==> [/usr/lib64/gcc/x86_64-pc-linux-gnu/16/crtendS.o]
+        collapse obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../lib64/crtn.o] ==> [/usr/lib64/crtn.o]
+        collapse library dir [/usr/lib/clang/23/lib/x86_64-pc-linux-gnu] ==> [/usr/lib/clang/23/lib/x86_64-pc-linux-gnu]
+        collapse library dir [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16] ==> [/usr/lib64/gcc/x86_64-pc-linux-gnu/16]
+        collapse library dir [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/16/../../../../lib64] ==> [/usr/lib64]
+        collapse library dir [/lib/../lib64] ==> [/lib64]
+        collapse library dir [/usr/lib64] ==> [/usr/lib64]
+        collapse library dir [/lib] ==> [/lib]
+        collapse library dir [/usr/lib] ==> [/usr/lib]
+        implicit libs: [stdc++;m;gcc_s;gcc;c;gcc_s;gcc]
+        implicit objs: [/usr/lib64/Scrt1.o;/usr/lib64/crti.o;/usr/lib64/gcc/x86_64-pc-linux-gnu/16/crtbeginS.o;/usr/lib64/gcc/x86_64-pc-linux-gnu/16/crtendS.o;/usr/lib64/crtn.o]
+        implicit dirs: [/usr/lib/clang/23/lib/x86_64-pc-linux-gnu;/usr/lib64/gcc/x86_64-pc-linux-gnu/16;/usr/lib64;/lib64;/lib;/usr/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CMakeDetermineLinkerId.cmake:41 (message)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:337 (cmake_determine_linker_id)"
+      - "/usr/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Running the CXX compiler's linker: "/usr/bin/ld" "-v"
+      GNU ld (GNU Binutils) 2.47
+  -
+    kind: "find_package-v1"
+    backtrace:
+      - "/usr/lib/cmake/Boost-1.92.0/BoostConfig.cmake:126 (find_package)"
+      - "/usr/lib/cmake/Boost-1.92.0/BoostConfig.cmake:177 (boost_find_component)"
+      - "/usr/share/cmake/Modules/FindBoost.cmake:610 (find_package)"
+      - "CMakeLists.txt:9 (find_package)"
+    name: "boost_headers"
+    configs:
+      -
+        filename: "boost_headers.cps"
+        kind: "cps"
+      -
+        filename: "boost_headersConfig.cmake"
+        kind: "cmake"
+      -
+        filename: "boost_headers-config.cmake"
+        kind: "cmake"
+    version_request:
+      version: "1.92.0"
+      version_complete: "1.92.0"
+      exact: true
+    settings:
+      required: "required_explicit"
+      quiet: true
+      global: false
+      policy_scope: true
+      bypass_provider: false
+      hints:
+        - "/usr/lib/cmake"
+      names:
+        - "boost_headers"
+      path_suffixes:
+        - ""
+      paths:
+        CMAKE_FIND_USE_CMAKE_PATH: true
+        CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+        CMAKE_FIND_USE_INSTALL_PREFIX: true
+        CMAKE_FIND_USE_PACKAGE_ROOT_PATH: true
+        CMAKE_FIND_USE_CMAKE_PACKAGE_REGISTRY: true
+        CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY: true
+        CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
+    candidates:
+      -
+        path: "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/pkgRedirects/boost_headersConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/pkgRedirects/boost_headers-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/pkgRedirects/lib/x86_64-pc-linux-gnu/cps/boost_headers.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/pkgRedirects/lib/cps/boost_headers.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/pkgRedirects/share/cps/boost_headers.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_headersConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_headers-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_headers-1.92.0/boost_headersConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+    found:
+      path: "/usr/lib/cmake/boost_headers-1.92.0/boost_headers-config.cmake"
+      mode: "config"
+      version: "1.92.0"
+    search_context:
+      ENV{PATH}:
+        - "/home/linuxbrew/.linuxbrew/bin"
+        - "/home/linuxbrew/.linuxbrew/sbin"
+        - "/usr/lib/ccache/bin/"
+        - "/home/maksim/.cargo/bin/"
+        - "/home/maksim/.local/bin/"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+        - "/home/maksim/.local/bin"
+        - "/home/maksim/.local/bin"
+        - "/home/maksim/.local/bin"
+        - "/opt/clion/bin/ninja/linux/x64"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/usr"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+  -
+    kind: "find_package-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/FindBoost.cmake:610 (find_package)"
+      - "CMakeLists.txt:9 (find_package)"
+    name: "Boost"
+    configs:
+      -
+        filename: "Boost.cps"
+        kind: "cps"
+      -
+        filename: "boost.cps"
+        kind: "cps"
+      -
+        filename: "BoostConfig.cmake"
+        kind: "cmake"
+      -
+        filename: "boost-config.cmake"
+        kind: "cmake"
+    version_request:
+      version: "1.66"
+      version_complete: "1.66"
+      exact: false
+    settings:
+      required: "optional"
+      quiet: true
+      global: false
+      policy_scope: true
+      bypass_provider: false
+      names:
+        - "Boost"
+      path_suffixes:
+        - ""
+      paths:
+        CMAKE_FIND_USE_CMAKE_PATH: true
+        CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+        CMAKE_FIND_USE_INSTALL_PREFIX: true
+        CMAKE_FIND_USE_PACKAGE_ROOT_PATH: true
+        CMAKE_FIND_USE_CMAKE_PACKAGE_REGISTRY: true
+        CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY: true
+        CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
+    candidates:
+      -
+        path: "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/pkgRedirects/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/pkgRedirects/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/pkgRedirects/lib/x86_64-pc-linux-gnu/cps/Boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/pkgRedirects/lib/x86_64-pc-linux-gnu/cps/boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/pkgRedirects/lib/cps/Boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/pkgRedirects/lib/cps/boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/pkgRedirects/share/cps/Boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/pkgRedirects/share/cps/boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/linuxbrew/.linuxbrew/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/linuxbrew/.linuxbrew/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/linuxbrew/.linuxbrew/lib/x86_64-pc-linux-gnu/cps/Boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/linuxbrew/.linuxbrew/lib/x86_64-pc-linux-gnu/cps/boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/linuxbrew/.linuxbrew/lib/cps/Boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/linuxbrew/.linuxbrew/lib/cps/boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/linuxbrew/.linuxbrew/share/cps/Boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/linuxbrew/.linuxbrew/share/cps/boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/maksim/.cargo/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/maksim/.cargo/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/maksim/.cargo/lib/x86_64-pc-linux-gnu/cps/Boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/maksim/.cargo/lib/x86_64-pc-linux-gnu/cps/boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/maksim/.cargo/lib/cps/Boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/maksim/.cargo/lib/cps/boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/maksim/.cargo/share/cps/Boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/maksim/.cargo/share/cps/boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/maksim/.local/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/maksim/.local/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/maksim/.local/lib/x86_64-pc-linux-gnu/cps/Boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/maksim/.local/lib/x86_64-pc-linux-gnu/cps/boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/maksim/.local/lib/cps/Boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/maksim/.local/lib/cps/boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/maksim/.local/share/cps/Boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/maksim/.local/share/cps/boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/local/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/x86_64-pc-linux-gnu/cps/Boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/x86_64-pc-linux-gnu/cps/boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cps/Boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cps/boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/local/share/cps/Boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/local/share/cps/boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/x86_64-pc-linux-gnu/cps/Boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/x86_64-pc-linux-gnu/cps/boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cps/Boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cps/boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/share/cps/Boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/share/cps/boost.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_wserialization-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_wserialization-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_wave-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_wave-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_url-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_url-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_unit_test_framework-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_unit_test_framework-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_type_erasure-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_type_erasure-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_timer-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_timer-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_thread-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_thread-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_test_exec_monitor-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_test_exec_monitor-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_system-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_system-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_stacktrace_noop-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_stacktrace_noop-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_stacktrace_from_exception-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_stacktrace_from_exception-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_stacktrace_dump-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_stacktrace_dump-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_stacktrace_basic-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_stacktrace_basic-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_stacktrace_addr2line-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_stacktrace_addr2line-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_serialization-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_serialization-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_regex_old-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_regex_old-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_regex-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_regex-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_random-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_random-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_python-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_python-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_program_options-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_program_options-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_process-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_process-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_prg_exec_monitor-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_prg_exec_monitor-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_numpy-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_numpy-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_nowide-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_nowide-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_mpi_python-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_mpi_python-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_mpi-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_mpi-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_math_tr1l-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_math_tr1l-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_math_tr1f-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_math_tr1f-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_math_tr1-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_math_tr1-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_math_c99l-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_math_c99l-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_math_c99f-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_math_c99f-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_math_c99-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_math_c99-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_math-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_math-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_log_setup-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_log_setup-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_log-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_log-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_locale-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_locale-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_json-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_json-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_iostreams-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_iostreams-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_headers-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_headers-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_graph_parallel-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_graph_parallel-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_graph-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_graph-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_filesystem-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_filesystem-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_fiber-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_fiber-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_exception-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_exception-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_date_time-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_date_time-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_coroutine-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_coroutine-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_contract-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_contract-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_context-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_context-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_container-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_container-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_cobalt_io_ssl-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_cobalt_io_ssl-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_cobalt_io-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_cobalt_io-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_cobalt-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_cobalt-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_chrono-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_chrono-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_charconv-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_charconv-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_atomic-1.92.0/BoostConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/boost_atomic-1.92.0/boost-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+    found:
+      path: "/usr/lib/cmake/Boost-1.92.0/BoostConfig.cmake"
+      mode: "config"
+      version: "1.92.0"
+    search_context:
+      ENV{PATH}:
+        - "/home/linuxbrew/.linuxbrew/bin"
+        - "/home/linuxbrew/.linuxbrew/sbin"
+        - "/usr/lib/ccache/bin/"
+        - "/home/maksim/.cargo/bin/"
+        - "/home/maksim/.local/bin/"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+        - "/home/maksim/.local/bin"
+        - "/home/maksim/.local/bin"
+        - "/home/maksim/.local/bin"
+        - "/opt/clion/bin/ninja/linux/x64"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/usr"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/FindBoost.cmake:538 (find_path)"
+      - "/usr/share/cmake/Modules/FindBoost.cmake:643 (_boost_set_legacy_variables_from_config)"
+      - "CMakeLists.txt:9 (find_package)"
+    mode: "path"
+    variable: "Boost_INCLUDE_DIR"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "boost/version.hpp"
+      - "boost/config.hpp"
+    candidate_directories:
+      - "/usr/include/"
+    found: "/usr/include/"
+    search_context:
+      ENV{PATH}:
+        - "/home/linuxbrew/.linuxbrew/bin"
+        - "/home/linuxbrew/.linuxbrew/sbin"
+        - "/usr/lib/ccache/bin/"
+        - "/home/maksim/.cargo/bin/"
+        - "/home/maksim/.local/bin/"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/var/lib/flatpak/exports/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+        - "/home/maksim/.local/bin"
+        - "/home/maksim/.local/bin"
+        - "/home/maksim/.local/bin"
+        - "/opt/clion/bin/ninja/linux/x64"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/usr"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+      CMAKE_SYSTEM_INCLUDE_PATH:
+        - "/usr/include/X11"
+...

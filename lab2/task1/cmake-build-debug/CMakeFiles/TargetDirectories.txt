@@ -1,4 +1,6 @@
+/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/shape_graphics.dir
 /home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/task4.dir
 /home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/task4_tests.dir
+/home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/test.dir
 /home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/edit_cache.dir
 /home/maksim/ood/lab2/task1/cmake-build-debug/CMakeFiles/rebuild_cache.dir

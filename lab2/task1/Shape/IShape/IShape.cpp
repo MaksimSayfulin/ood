@@ -58,13 +58,13 @@ void shapes::IShape::SetColor(const gfx::Color &color) {
         return;
     }
     m_color = color;
-    m_colorChangedEvent.Notify(*this, m_color);
+    m_colorChangedEvent(*this, m_color);
 }
 
 void shapes::IShape::SetGeometry(std::unique_ptr<IShapeGeometry> geometry) {
     m_geometry = std::move(geometry);
     if (m_geometry) {
-        m_geometryChangedEvent.Notify(*this, *m_geometry);
+        m_geometryChangedEvent(*this, *m_geometry);
     }
 }
 
@@ -77,7 +77,7 @@ void shapes::IShape::Move(const double x, const double y) {
         m_geometry->Move(x, y);
     }
 
-    m_moveEvent.Notify(*this, x, y);
+    m_moveEvent(*this, x, y);
 }
 
 void shapes::IShape::Draw(gfx::ICanvas &canvas) const {
@@ -87,14 +87,16 @@ void shapes::IShape::Draw(gfx::ICanvas &canvas) const {
     }
 }
 
-Event<const shapes::IShape &, const gfx::Color &> &shapes::IShape::OnColorChanged() {
+boost::signals2::signal<void(const shapes::IShape&, const gfx::Color&)>&
+shapes::IShape::OnColorChanged() {
     return m_colorChangedEvent;
 }
 
-Event<const shapes::IShape &, const shapes::IShapeGeometry &> &shapes::IShape::OnGeometryChanged() {
+boost::signals2::signal<void(const shapes::IShape&, const shapes::IShapeGeometry&)>&
+shapes::IShape::OnGeometryChanged() {
     return m_geometryChangedEvent;
 }
 
-Event<const shapes::IShape &, double, double> &shapes::IShape::OnMove() {
+boost::signals2::signal<void(const shapes::IShape&, double, double)>&shapes::IShape::OnMove() {
     return m_moveEvent;
 }
