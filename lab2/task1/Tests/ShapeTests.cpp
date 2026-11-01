@@ -1,8 +1,8 @@
 #define CATCH_CONFIG_MAIN
 #include "../Catch/Catch.hpp"
 #include "../Graphics/Canvas/ICanvas/ICanvas.h"
-#include "../Shape/IShape/IShape.h"
-#include "../Shape/ShapeGeometry/IShapeGeometry.h"
+#include "../Shape/model/IShape/IShape.h"
+#include "../Shape/model/ShapeGeometry/IShapeGeometry.h"
 
 #include <memory>
 #include <string>
@@ -17,6 +17,8 @@ public:
         setColorCalled = true;
     }
     void LineTo(double, double) override {}
+    void Fill() override {}
+    void FillEllipse(double, double, double, double) override {}
     void DrawEllipse(double, double, double, double) override {}
     void DrawText(double, double, double, std::string) override {}
 };
@@ -27,6 +29,7 @@ public:
     bool moveCalled = false;
     double accumulatedX = 0.0;
     double accumulatedY = 0.0;
+    gfx::Rect m_bounds{};
 
     void Draw(gfx::ICanvas&) const override {
         drawCalled = true;
@@ -36,6 +39,18 @@ public:
         moveCalled = true;
         accumulatedX += x;
         accumulatedY += y;
+    }
+
+    [[nodiscard]] bool Contains(double, double) const override {
+        return false;
+    }
+
+    [[nodiscard]] gfx::Rect GetBounds() const override {
+        return m_bounds;
+    }
+
+    void SetBounds(const gfx::Rect& bounds) override {
+        m_bounds = bounds;
     }
 
     [[nodiscard]] std::string GetParameters() const override {

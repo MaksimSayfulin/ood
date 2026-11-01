@@ -3,10 +3,11 @@
 #include <vector>
 #include <boost/signals2/connection.hpp>
 #include "../Catch/Catch.hpp"
-#include "../Picture/Picture.h"
+#include "../Graphics/Canvas/CanvasSVG/CanvasSvg.h"
+#include "../Picture/model/Picture.h"
 
-#include "../Shape/ShapeGeometry/ShapeGeometries/Circle/Circle.h"
-#include "../Shape/ShapeGeometry/ShapeGeometries/Rectangle/Rectangle.h"
+#include "../Shape/model/ShapeGeometry/ShapeGeometries/Ellipse/Ellipse.h"
+#include "../Shape/model/ShapeGeometry/ShapeGeometries/Rectangle/Rectangle.h"
 
 namespace {
     struct CallLog {
@@ -18,11 +19,11 @@ namespace {
     };
 
     shapes::IShape MakeCircleShape(const std::string& id = "1") {
-        return {id, gfx::Color("#F0F0F0"), std::make_unique<shapes::Circle>(10, 100, 100)};
+        return {id, gfx::Color("#F0F0F0"), std::make_unique<shapes::Ellipse>(gfx::Rect{10, 100, 200, 200})};
     }
 
     shapes::IShape MakeRectangleShape(const std::string& id = "2") {
-        return {id, gfx::Color("#F0F0F0"), std::make_unique<shapes::Rectangle>(100, 100, 100, 100)};
+        return {id, gfx::Color("#F0F0F0"), std::make_unique<shapes::Rectangle>(gfx::Rect{100, 100, 100, 100})};
     }
 }
 
@@ -355,7 +356,7 @@ TEST_CASE("Изменение Shape напрямую приводит к соо�
     auto& shape = picture.GetShape("1");
     shape.Move(10, 10);
     shape.SetColor(gfx::Color("#FF0000"));
-    shape.SetGeometry(std::make_unique<shapes::Rectangle>(10, 10, 20, 20));
+    shape.SetGeometry(std::make_unique<shapes::Rectangle>(gfx::Rect{10, 10, 20, 20}));
 
     REQUIRE(moveCount == 1);
     REQUIRE(colorCount == 1);
@@ -464,7 +465,7 @@ TEST_CASE("Обработчик события изменения геометр
     picture.AddShape(MakeCircleShape());
 
     REQUIRE(geomCount == 0);
-    picture.ChangeShape("1", std::make_unique<shapes::Rectangle>(100, 100, 50, 50));
+    picture.ChangeShape("1", std::make_unique<shapes::Rectangle>(gfx::Rect{100, 100, 50, 50}));
     REQUIRE(geomCount == 1);
     REQUIRE(receivedName == "rectangle");
 }

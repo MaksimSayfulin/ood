@@ -1,4 +1,0 @@
-/home/maksim/ood/lab2/task1/build/CMakeFiles/task4.dir
-/home/maksim/ood/lab2/task1/build/CMakeFiles/task4_tests.dir
-/home/maksim/ood/lab2/task1/build/CMakeFiles/edit_cache.dir
-/home/maksim/ood/lab2/task1/build/CMakeFiles/rebuild_cache.dir

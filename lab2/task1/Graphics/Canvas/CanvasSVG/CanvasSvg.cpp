@@ -21,6 +21,14 @@ void gfx::CanvasSvg::DrawEllipse(double cx, double cy, double rx, double ry) {
     m_stream << ellipse;
 }
 
+void gfx::CanvasSvg::FillEllipse(double cx, double cy, double rx, double ry) {
+    const std::string ellipse = std::format(
+        "  <ellipse cx=\"{}\" cy=\"{}\" rx=\"{}\" ry=\"{}\" fill=\"{}\" stroke=\"none\" />\n",
+        cx, cy, rx, ry, m_color.GetColor());
+
+    m_stream << ellipse;
+}
+
 void gfx::CanvasSvg::DrawText(double left, double top, double fontSize, std::string text) {
         const std::string textSVG = std::format(
             "  <text x=\"{}\" y=\"{}\" font-size=\"{}\" fill=\"{}\">{}</text>\n",
@@ -36,5 +44,20 @@ void gfx::CanvasSvg::LineTo(double x, double y) {
     );
 
     m_stream << line;
-    MoveTo(x, y);
+    TrackPath(x, y);
+}
+
+void gfx::CanvasSvg::Fill() {
+    const auto& path = GetPath();
+    if (path.size() < 3) {
+        return;
+    }
+
+    std::string points;
+    for (const auto& point : path) {
+        points += std::format("{} {} ", point.x, point.y);
+    }
+
+    m_stream << std::format("  <polygon points=\"{}\" fill=\"{}\" stroke=\"none\" />\n",
+        points, m_color.GetColor());
 }

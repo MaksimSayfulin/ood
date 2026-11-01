@@ -9,8 +9,10 @@ namespace gfx {
         explicit CanvasSvg(std::ostream &stream);
         ~CanvasSvg() override;
         void DrawEllipse(double cx, double cy, double rx, double ry) override;
+        void FillEllipse(double cx, double cy, double rx, double ry) override;
         void DrawText(double left, double top, double fontSize, std::string text) override;
         void LineTo(double x, double y) override;
+        void Fill() override;
     private:
         std::ostream &m_stream;
     };
