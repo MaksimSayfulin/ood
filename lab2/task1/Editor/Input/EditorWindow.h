@@ -8,10 +8,10 @@
 #include <boost/signals2/signal.hpp>
 #include <SFML/Graphics.hpp>
 
-#include "../Graphics/Geometry/Rect.h"
-#include "EditorController.h"
-#include "EditorTypes.h"
-#include "FilePrompt.h"
+#include "../../Graphics/Geometry/Rect.h"
+#include "../Controller/EditorController.h"
+#include "../Controller/EditorTypes.h"
+#include "../File/FilePrompt.h"
 
 namespace editor {
     class EditorView;
@@ -24,7 +24,7 @@ namespace editor {
         [[nodiscard]] gfx::Size GetWindowSize() const;
         [[nodiscard]] gfx::Rect GetCanvasBounds() const;
 
-        void Update(EditorView& view, const EditorController& controller, const shapes::Picture& document);
+        void Update(EditorView& view, EditorController& controller, const shapes::Picture& document);
 
         void ShowFilePrompt(FilePromptMode mode, std::string_view title, std::u32string initialPath);
 
@@ -46,8 +46,8 @@ namespace editor {
         boost::signals2::signal<void(double)>& OnListScrolled();
 
     private:
-        void HandleEvents(const EditorController& controller);
-        void HandleKey(const sf::Event::KeyPressed& key);
+        void HandleEvents(EditorController& controller);
+        void HandleKey(EditorController& controller, const sf::Event::KeyPressed& key);
         void HandleTextEntered(const sf::Event::TextEntered& entered);
         void UpdateCursor(const EditorController& controller);
         void ResetView();

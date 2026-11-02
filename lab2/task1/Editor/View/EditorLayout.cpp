@@ -6,6 +6,11 @@ namespace {
     constexpr double groupGap = 24.0;
 }
 
+namespace {
+    constexpr double colorSwatchSize = 20.0;
+    constexpr double colorSwatchGap = 4.0;
+}
+
 const std::vector<editor::layout::ToolbarButton> &editor::layout::Toolbar() {
     static const std::vector<ToolbarButton> buttons = [] {
         const std::pair<UiCommand, std::string_view> items[] = {
@@ -13,10 +18,14 @@ const std::vector<editor::layout::ToolbarButton> &editor::layout::Toolbar() {
             {UiCommand::DrawRectangle, "Прямоуг."},
             {UiCommand::DrawEllipse, "Эллипс"},
             {UiCommand::DrawTriangle, "Треуг."},
-            {UiCommand::DeleteShape, "Удалить"},
-            {UiCommand::NewDocument, "Новый"},
-            {UiCommand::OpenDocument, "Открыть"},
-            {UiCommand::SaveDocument, "Сохранить"},
+        };
+
+        const std::pair<UiCommand, gfx::Color> colors[] = {
+            {UiCommand::ColorRed, gfx::Color{std::string{"#E6194B"}}},
+            {UiCommand::ColorGreen, gfx::Color{std::string{"#3CB44B"}}},
+            {UiCommand::ColorBlue, gfx::Color{std::string{"#4363D8"}}},
+            {UiCommand::ColorBlack, gfx::Color{std::string{"#000000"}}},
+            {UiCommand::ColorWhite, gfx::Color{std::string{"#FFFFFF"}}},
         };
 
         std::vector<ToolbarButton> result;
@@ -25,11 +34,36 @@ const std::vector<editor::layout::ToolbarButton> &editor::layout::Toolbar() {
         for (const auto& [command, label] : items) {
             const gfx::Rect bounds{x, (toolbarHeight - buttonHeight) / 2, buttonWidth, buttonHeight};
 
+            result.push_back({command, label, std::nullopt, bounds});
+            x += buttonWidth + buttonGap;
+        }
+
+        x += groupGap;
+
+        for (const auto& [command, color] : colors) {
+            const gfx::Rect bounds{x, (toolbarHeight - colorSwatchSize) / 2, colorSwatchSize, colorSwatchSize};
+
+            result.push_back({command, "", color, bounds});
+            x += colorSwatchSize + colorSwatchGap;
+        }
+
+        x += groupGap;
+
+        const std::pair<UiCommand, std::string_view> fileItems[] = {
+            {UiCommand::DeleteShape, "Удалить"},
+            {UiCommand::NewDocument, "Новый"},
+            {UiCommand::OpenDocument, "Открыть"},
+            {UiCommand::SaveDocument, "Сохранить"},
+        };
+
+        for (const auto& [command, label] : fileItems) {
+            const gfx::Rect bounds{x, (toolbarHeight - buttonHeight) / 2, buttonWidth, buttonHeight};
+
             if (command == UiCommand::NewDocument) {
                 x += groupGap;
             }
 
-            result.push_back({command, label, bounds});
+            result.push_back({command, label, std::nullopt, bounds});
             x += buttonWidth + buttonGap;
         }
         return result;

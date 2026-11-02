@@ -2,8 +2,8 @@
 
 #include <array>
 
-#include "../Graphics/Geometry/Rect.h"
-#include "EditorTypes.h"
+#include "../../Graphics/Geometry/Rect.h"
+#include "../Controller/EditorTypes.h"
 
 namespace editor {
     class SelectionFrame {

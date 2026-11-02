@@ -1,5 +1,5 @@
 #include "../Catch/Catch.hpp"
-#include "../Editor/EditorLayout.h"
+#include "../Editor/View/EditorLayout.h"
 
 namespace {
     gfx::Point CenterOf(const editor::layout::ToolbarButton& button) {

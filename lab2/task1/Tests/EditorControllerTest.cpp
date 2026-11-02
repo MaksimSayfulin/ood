@@ -4,8 +4,8 @@
 #include <vector>
 
 #include "../Catch/Catch.hpp"
-#include "../Editor/EditorController.h"
-#include "../Editor/SelectionFrame.h"
+#include "../Editor/Controller/EditorController.h"
+#include "../Editor/Geometry/SelectionFrame.h"
 #include "../Graphics/Canvas/CanvasSVG/CanvasSvg.h"
 #include "../Shape/model/ShapeFactory.h"
 
@@ -345,16 +345,23 @@ TEST_CASE("Инструменты: кнопка панели выбирает и
         REQUIRE(editor.document.GetShapes().back().GetBounds() == (gfx::Rect{100, 100, 200, 200}));
     }
 
-    SECTION("Одиночный щелчок создаёт фигуру стандартного размера в точке щелчка") {
+    SECTION("Одиночный щелчок с нулевым размером не создаёт фигуру") {
         editor.controller.OnCommand(editor::UiCommand::DrawTriangle);
         editor.controller.OnPointerPressed({400, 300});
         editor.controller.OnPointerReleased({400, 300});
 
-        const auto bounds = editor.document.GetShapes().back().GetBounds();
-        REQUIRE(bounds.width == editor::defaultShapeSize.width);
-        REQUIRE(bounds.height == editor::defaultShapeSize.height);
-        REQUIRE(bounds.x + bounds.width / 2 == 400);
-        REQUIRE(bounds.y + bounds.height / 2 == 300);
+        REQUIRE(editor.document.GetShapesCount() == 0);
+        REQUIRE_FALSE(editor.controller.CanUndo());
+    }
+
+    SECTION("Протяжка с нулевой шириной не создаёт фигуру") {
+        editor.controller.OnCommand(editor::UiCommand::DrawTriangle);
+        editor.controller.OnPointerPressed({400, 300});
+        editor.controller.OnPointerMoved({400, 450});
+        editor.controller.OnPointerReleased({400, 450});
+
+        REQUIRE(editor.document.GetShapesCount() == 0);
+        REQUIRE_FALSE(editor.controller.CanUndo());
     }
 
     SECTION("Инструмент остаётся активным: можно нарисовать следующую фигуру") {

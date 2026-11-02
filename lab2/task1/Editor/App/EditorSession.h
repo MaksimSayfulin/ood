@@ -6,11 +6,11 @@
 #include <boost/signals2/signal.hpp>
 #include <SFML/Graphics.hpp>
 
-#include "../Graphics/Canvas/NullCanvas/NullCanvas.h"
-#include "../Picture/model/Picture.h"
-#include "EditorController.h"
-#include "EditorView.h"
-#include "EditorWindow.h"
+#include "../../Graphics/Canvas/NullCanvas/NullCanvas.h"
+#include "../../Picture/model/Picture.h"
+#include "../Controller/EditorController.h"
+#include "../View/EditorView.h"
+#include "../Input/EditorWindow.h"
 
 namespace editor {
     class EditorSession {

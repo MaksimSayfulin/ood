@@ -5,10 +5,12 @@
 #include "../ShapeGeometry/IShapeGeometry.h"
 
 namespace shapes {
+    class IShapeVisitor;
+
     class IShape {
     public:
         IShape(std::string id, gfx::Color color, std::unique_ptr<IShapeGeometry> geometry);
-        ~IShape() = default;
+        virtual ~IShape() = default;
 
         IShape(const IShape& other);
         IShape& operator=(const IShape& other);
@@ -31,6 +33,8 @@ namespace shapes {
         void Move(double x, double y);
         void Draw(gfx::ICanvas &canvas) const;
 
+        virtual void Accept(IShapeVisitor& visitor) const;
+
         boost::signals2::signal<void(const IShape&, double, double)>& OnMove();
         boost::signals2::signal<void(const IShape&, const gfx::Color&)>& OnColorChanged();
         boost::signals2::signal<void(const IShape&, const IShapeGeometry&)>& OnGeometryChanged();
@@ -43,5 +47,29 @@ namespace shapes {
         boost::signals2::signal<void(const IShape&, double, double)> m_moveEvent;
         boost::signals2::signal<void(const IShape&, const gfx::Color&)> m_colorChangedEvent;
         boost::signals2::signal<void(const IShape&, const IShapeGeometry&)> m_geometryChangedEvent;
+    };
+
+    class IShapeVisitor {
+    public:
+        virtual ~IShapeVisitor() = default;
+
+        virtual void Visit(const IShape& shape) const = 0;
+    };
+
+    class ShapeDrawingVisitor : public IShapeVisitor {
+    public:
+        explicit ShapeDrawingVisitor(gfx::ICanvas& canvas) : m_canvas(canvas) {}
+
+        void Visit(const IShape& shape) const override {
+            if (shape.GetGeometry() == nullptr) {
+                return;
+            }
+
+            m_canvas.SetColor(shape.GetColor());
+            shape.GetGeometry()->Draw(m_canvas);
+        }
+
+    private:
+        gfx::ICanvas& m_canvas;
     };
 }

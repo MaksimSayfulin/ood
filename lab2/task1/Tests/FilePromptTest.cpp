@@ -3,8 +3,8 @@
 #include <string>
 
 #include "../Catch/Catch.hpp"
-#include "../Editor/EditorController.h"
-#include "../Editor/FilePrompt.h"
+#include "../Editor/Controller/EditorController.h"
+#include "../Editor/File/FilePrompt.h"
 #include "../Graphics/Canvas/CanvasSVG/CanvasSvg.h"
 #include "../Shape/model/ShapeFactory.h"
 

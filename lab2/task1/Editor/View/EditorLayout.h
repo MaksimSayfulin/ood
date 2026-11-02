@@ -6,8 +6,8 @@
 #include <utility>
 #include <vector>
 
-#include "../Graphics/Geometry/Rect.h"
-#include "EditorTypes.h"
+#include "../../Graphics/Geometry/Rect.h"
+#include "../Controller/EditorTypes.h"
 
 namespace editor::layout {
     inline constexpr double toolbarHeight = 44.0;
@@ -32,6 +32,7 @@ namespace editor::layout {
     struct ToolbarButton {
         UiCommand command;
         std::string_view label;
+        std::optional<gfx::Color> color;
         gfx::Rect bounds;
     };
 

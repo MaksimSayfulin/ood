@@ -46,17 +46,22 @@ target_link_libraries(core
         PRIVATE project_warnings)
 
 add_library(editor STATIC
-        Editor/EditorTypes.h
-        Editor/FilePrompt.h
-        Editor/FilePrompt.cpp
-        Editor/SelectionFrame.h
-        Editor/SelectionFrame.cpp
-        Editor/SnapEngine.h
-        Editor/SnapEngine.cpp
-        Editor/EditorLayout.h
-        Editor/EditorLayout.cpp
-        Editor/EditorController.h
-        Editor/EditorController.cpp
+        Editor/Controller/EditorTypes.h
+        Editor/File/FilePrompt.h
+        Editor/File/FilePrompt.cpp
+        Editor/Geometry/SelectionFrame.h
+        Editor/Geometry/SelectionFrame.cpp
+        Editor/Geometry/SnapEngine.h
+        Editor/Geometry/SnapEngine.cpp
+        Editor/View/EditorLayout.h
+        Editor/View/EditorLayout.cpp
+        Editor/Commands/ICommand.h
+        Editor/Commands/Commands.h
+        Editor/Commands/Commands.cpp
+        Editor/Commands/UndoHistory.h
+        Editor/Commands/UndoHistory.cpp
+        Editor/Controller/EditorController.h
+        Editor/Controller/EditorController.cpp
 )
 target_link_libraries(editor
         PUBLIC  core
@@ -67,14 +72,14 @@ add_library(frontend_sfml STATIC
         Picture/view/SfmlCanvas.cpp
         Picture/view/SfmlColor.h
         Picture/view/SfmlColor.cpp
-        Editor/EditorWindow.h
-        Editor/EditorWindow.cpp
-        Editor/EditorView.h
-        Editor/EditorView.cpp
-        Editor/EditorSession.h
-        Editor/EditorSession.cpp
-        Editor/EditorApp.h
-        Editor/EditorApp.cpp
+        Editor/Input/EditorWindow.h
+        Editor/Input/EditorWindow.cpp
+        Editor/View/EditorView.h
+        Editor/View/EditorView.cpp
+        Editor/App/EditorSession.h
+        Editor/App/EditorSession.cpp
+        Editor/App/EditorApp.h
+        Editor/App/EditorApp.cpp
 )
 target_link_libraries(frontend_sfml
         PUBLIC  editor SFML::Graphics
@@ -96,6 +101,7 @@ add_executable(task4_tests
         Tests/MultiSelectionTest.cpp
         Tests/ShapeListTest.cpp
         Tests/SnapTest.cpp
+        Tests/UndoRedoTests.cpp
 )
 target_link_libraries(task4_tests PRIVATE core editor project_warnings)
 add_test(NAME task4_tests COMMAND task4_tests)

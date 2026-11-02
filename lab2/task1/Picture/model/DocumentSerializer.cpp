@@ -4,6 +4,7 @@
 #include <cctype>
 #include <fstream>
 #include <format>
+#include <ostream>
 #include <sstream>
 #include <string>
 #include <string_view>
@@ -14,6 +15,21 @@
 namespace {
     constexpr std::string_view fileHeader = "shapes";
     constexpr int fileVersion = 1;
+
+    class ShapeSavingVisitor : public shapes::IShapeVisitor {
+    public:
+        explicit ShapeSavingVisitor(std::ostream& output) : m_output(output) {}
+
+        void Visit(const shapes::IShape& shape) const override {
+            const auto bounds = shape.GetBounds();
+            m_output << "shape " << shape.GetGeometry()->GetShapeName() << ' ' << shape.GetId() << ' '
+                     << bounds.x << ' ' << bounds.y << ' ' << bounds.width << ' ' << bounds.height << ' '
+                     << shape.GetColor().GetColor() << '\n';
+        }
+
+    private:
+        std::ostream& m_output;
+    };
 
     std::vector<std::string> Split(const std::string& line) {
         std::istringstream stream(line);
@@ -60,13 +76,10 @@ void shapes::DocumentSerializer::Save(const std::vector<IShape>& shapes, std::os
         throw DocumentError("Не удалось записать документ: поток недоступен");
     }
 
+    ShapeSavingVisitor visitor(output);
     output << fileHeader << ' ' << fileVersion << '\n';
     for (const auto& shape : shapes) {
-        const auto bounds = shape.GetBounds();
-        output << "shape " << shape.GetGeometry()->GetShapeName() << ' '
-               << shape.GetId() << ' '
-               << bounds.x << ' ' << bounds.y << ' ' << bounds.width << ' ' << bounds.height << ' '
-               << shape.GetColor().GetColor() << '\n';
+        shape.Accept(visitor);
     }
 }
 

@@ -7,11 +7,11 @@
 #include <optional>
 #include <string>
 
-#include "../Picture/view/SfmlCanvas.h"
-#include "../Picture/view/SfmlColor.h"
-#include "../Shape/model/ShapeFactory.h"
+#include "../../Picture/view/SfmlCanvas.h"
+#include "../../Picture/view/SfmlColor.h"
+#include "../../Shape/model/ShapeFactory.h"
 #include "EditorLayout.h"
-#include "SelectionFrame.h"
+#include "../Geometry/SelectionFrame.h"
 
 namespace {
     constexpr sf::Color windowBackground{48, 50, 58};
@@ -120,6 +120,12 @@ void editor::EditorView::DrawToolbar(sf::RenderTarget& target, const gfx::Size& 
         const bool active = toolFor(button.command) == activeTool;
         const auto bounds = button.bounds;
 
+        if (button.color.has_value()) {
+            const auto sfColor = gfx::ToSfmlColor(*button.color);
+            FillRect(target, bounds, sfColor, 1.5f, active ? frameColor : handleBorder);
+            continue;
+        }
+
         FillRect(target, bounds, active ? buttonActive : buttonBackground, active ? 2.f : 1.f, frameColor);
 
         if (m_font != nullptr) {
@@ -165,10 +171,10 @@ void editor::EditorView::DrawGuides(sf::RenderTarget& target, const gfx::Rect& c
 
     for (const auto& guide : guides) {
         const auto position = static_cast<float>(guide.position);
-        const float from = static_cast<float>(guide.axis == GuideLine::Axis::Vertical
+        const auto from = static_cast<float>(guide.axis == GuideLine::Axis::Vertical
                                                    ? canvasBounds.y
                                                    : canvasBounds.x);
-        const float to = static_cast<float>(guide.axis == GuideLine::Axis::Vertical
+        const auto to = static_cast<float>(guide.axis == GuideLine::Axis::Vertical
                                                  ? canvasBounds.Bottom()
                                                  : canvasBounds.Right());
 

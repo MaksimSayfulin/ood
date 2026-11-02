@@ -3,8 +3,8 @@
 #include <string>
 #include <string_view>
 
-#include "../Graphics/Color/Color.h"
-#include "../Graphics/Geometry/Rect.h"
+#include "../../Graphics/Color/Color.h"
+#include "../../Graphics/Geometry/Rect.h"
 
 namespace editor {
     enum class Tool { Select, Rectangle, Ellipse, Triangle };
@@ -17,7 +17,12 @@ namespace editor {
         DeleteShape,
         NewDocument,
         OpenDocument,
-        SaveDocument
+        SaveDocument,
+        ColorRed,
+        ColorGreen,
+        ColorBlue,
+        ColorBlack,
+        ColorWhite
     };
 
     enum class ResizeHandle {

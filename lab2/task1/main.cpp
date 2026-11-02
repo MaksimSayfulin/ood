@@ -1,9 +1,7 @@
-#include "Editor/EditorApp.h"
+#include "Editor/App/EditorApp.h"
 
 int main() {
     editor::EditorApp app;
     return app.Run();
 }
 
-// на релизе обновлять модель
-// Можно в самом начале вычислить позиции гайдлайнов, а потом выбирать только рекомендуемые (наиболее подходящие, ожидаемые от пользователя)

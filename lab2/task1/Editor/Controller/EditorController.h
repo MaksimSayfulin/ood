@@ -8,10 +8,12 @@
 
 #include <boost/signals2/signal.hpp>
 
-#include "../Graphics/Geometry/Rect.h"
-#include "../Picture/model/Picture.h"
+#include "../../Graphics/Geometry/Rect.h"
+#include "../../Picture/model/Picture.h"
+#include "../Commands/Commands.h"
 #include "EditorTypes.h"
-#include "SnapEngine.h"
+#include "../Geometry/SnapEngine.h"
+#include "../Commands/UndoHistory.h"
 
 namespace editor {
     class EditorController {
@@ -26,7 +28,7 @@ namespace editor {
         void OnCanvasResized(gfx::Size size);
 
         void OnListRowPressed(std::optional<std::size_t> row, bool toggle = false);
-        void OnListRowMoved(std::optional<std::size_t> row) const;
+        void OnListRowMoved(std::optional<std::size_t> row);
         void OnListRowReleased();
         void OnListScrolled(double steps);
 
@@ -47,6 +49,13 @@ namespace editor {
 
         [[nodiscard]] const std::filesystem::path& GetFilePath() const;
         [[nodiscard]] const std::string& GetLastError() const;
+
+        void Undo();
+        void Redo();
+        [[nodiscard]] bool CanUndo() const;
+        [[nodiscard]] bool CanRedo() const;
+
+        void ChangeColor(const gfx::Color& color);
 
         void NewDocument();
         bool LoadDocument(const std::filesystem::path& path);
@@ -92,6 +101,7 @@ namespace editor {
         void ClearSelection();
         void DeleteSelected();
         void CancelGesture();
+        void PruneInvalidSelection();
 
         void AddShape(const gfx::Rect& bounds, Tool tool);
 
@@ -104,17 +114,18 @@ namespace editor {
         void ApplyMove(const gfx::Point& point, bool disableSnap = false);
         void ApplyResize(const gfx::Point& point, bool disableSnap = false);
         void CommitCreatedShape();
+        void CommitMove();
+        void CommitResize();
 
-        [[nodiscard]] gfx::Rect GroupBounds(const std::vector<gfx::Rect>& bounds) const;
-        [[nodiscard]] gfx::Rect DefaultBoundsAt(const gfx::Point& anchor) const;
-        [[nodiscard]] gfx::Rect Normalize(const gfx::Point& anchor, const gfx::Point& point) const;
+        [[nodiscard]] static gfx::Rect GroupBounds(const std::vector<gfx::Rect>& bounds);
+        [[nodiscard]] static gfx::Rect Normalize(const gfx::Point& anchor, const gfx::Point& point);
         [[nodiscard]] gfx::Rect ConstrainToCanvas(gfx::Rect bounds) const;
 
         [[nodiscard]] std::optional<std::string> ShapeIdAtRow(std::size_t row) const;
         [[nodiscard]] double GetListMaxScroll() const;
 
-        [[nodiscard]] std::vector<gfx::Rect> ForeignBounds() const;
-        [[nodiscard]] SnapEngine::Snap SnapTo(const gfx::Rect& bounds, int edges = SnapEngine::allEdges) const;
+        [[nodiscard]] const std::vector<gfx::Rect>& ForeignBounds();
+        [[nodiscard]] SnapEngine::Snap SnapTo(const gfx::Rect& bounds, int edges = SnapEngine::allEdges);
         [[nodiscard]] static int SnapEdgesForHandle(ResizeHandle handle);
 
         shapes::Picture& m_document;
@@ -133,7 +144,12 @@ namespace editor {
         std::optional<std::string> m_listDraggedId;
         std::vector<GuideLine> m_activeGuides;
 
+        std::vector<gfx::Rect> m_foreignBoundsCache;
+        bool m_foreignBoundsDirty = true;
+
         boost::signals2::signal<void()> m_openFileRequested;
         boost::signals2::signal<void()> m_saveFileRequested;
+
+        UndoHistory m_history;
     };
 }

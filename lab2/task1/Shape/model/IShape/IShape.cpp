@@ -94,10 +94,12 @@ void shapes::IShape::Move(const double x, const double y) {
 }
 
 void shapes::IShape::Draw(gfx::ICanvas &canvas) const {
-    if (m_geometry) {
-        canvas.SetColor(m_color);
-        m_geometry->Draw(canvas);
-    }
+    ShapeDrawingVisitor visitor{canvas};
+    Accept(visitor);
+}
+
+void shapes::IShape::Accept(IShapeVisitor &visitor) const {
+    visitor.Visit(*this);
 }
 
 boost::signals2::signal<void(const shapes::IShape&, const gfx::Color&)>&

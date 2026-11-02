@@ -4,10 +4,10 @@
 #include <cmath>
 #include <utility>
 
-#include "../Picture/model/DocumentSerializer.h"
-#include "../Shape/model/ShapeFactory.h"
-#include "EditorLayout.h"
-#include "SelectionFrame.h"
+#include "../../Picture/model/DocumentSerializer.h"
+#include "../../Shape/model/ShapeFactory.h"
+#include "../View/EditorLayout.h"
+#include "../Geometry/SelectionFrame.h"
 
 editor::EditorController::EditorController(shapes::Picture& document) : m_document(document) {
 }
@@ -43,6 +43,21 @@ void editor::EditorController::OnCommand(const UiCommand command) {
         } else {
             SaveDocument();
         }
+        break;
+    case UiCommand::ColorRed:
+        ChangeColor(gfx::Color{std::string{"#E6194B"}});
+        break;
+    case UiCommand::ColorGreen:
+        ChangeColor(gfx::Color{std::string{"#3CB44B"}});
+        break;
+    case UiCommand::ColorBlue:
+        ChangeColor(gfx::Color{std::string{"#4363D8"}});
+        break;
+    case UiCommand::ColorBlack:
+        ChangeColor(gfx::Color{std::string{"#000000"}});
+        break;
+    case UiCommand::ColorWhite:
+        ChangeColor(gfx::Color{std::string{"#FFFFFF"}});
         break;
     }
 }
@@ -129,6 +144,9 @@ void editor::EditorController::OnPointerReleased(const gfx::Point&) {
         SelectOnly(*m_move->pressedShapeId);
     }
 
+    CommitMove();
+    CommitResize();
+
     CancelGesture();
 }
 
@@ -165,7 +183,7 @@ void editor::EditorController::OnListRowPressed(const std::optional<std::size_t>
     m_listDraggedId = id;
 }
 
-void editor::EditorController::OnListRowMoved(const std::optional<std::size_t> row) const {
+void editor::EditorController::OnListRowMoved(const std::optional<std::size_t> row) {
     if (!m_listDraggedId.has_value() || !row.has_value()) {
         return;
     }
@@ -176,7 +194,18 @@ void editor::EditorController::OnListRowMoved(const std::optional<std::size_t> r
     }
 
     const auto target = count - 1 - *row;
-    m_document.MoveShapeToIndex(*m_listDraggedId, target);
+    const auto fromIndex = m_document.GetShapeIndex(*m_listDraggedId);
+    if (fromIndex == target) {
+        return;
+    }
+
+    auto command = std::make_unique<ReorderShapesCommand>(m_document, *m_listDraggedId, fromIndex, target);
+    try {
+        command->Execute();
+        m_history.Execute(std::move(command));
+    } catch (const std::exception& error) {
+        m_lastError = error.what();
+    }
 }
 
 void editor::EditorController::OnListRowReleased() {
@@ -244,10 +273,71 @@ const std::string &editor::EditorController::GetLastError() const {
     return m_lastError;
 }
 
+void editor::EditorController::Undo() {
+    try {
+        m_history.Undo();
+    } catch (const std::exception& error) {
+        m_lastError = error.what();
+    }
+
+    PruneInvalidSelection();
+}
+
+void editor::EditorController::Redo() {
+    try {
+        m_history.Redo();
+    } catch (const std::exception& error) {
+        m_lastError = error.what();
+    }
+
+    PruneInvalidSelection();
+}
+
+bool editor::EditorController::CanUndo() const {
+    return m_history.CanUndo();
+}
+
+bool editor::EditorController::CanRedo() const {
+    return m_history.CanRedo();
+}
+
+void editor::EditorController::ChangeColor(const gfx::Color& color) {
+    if (m_selectedIds.empty()) {
+        return;
+    }
+
+    auto command = std::make_unique<ChangeColorCommand>(m_document, m_selectedIds, color);
+    try {
+        command->Execute();
+        m_history.Execute(std::move(command));
+    } catch (const std::exception& error) {
+        m_lastError = error.what();
+    }
+}
+
+void editor::EditorController::PruneInvalidSelection() {
+    std::vector<std::string> kept;
+    kept.reserve(m_selectedIds.size());
+
+    for (const auto& id : m_selectedIds) {
+        const auto& shapes = m_document.GetShapes();
+        const bool exists = std::ranges::any_of(shapes, [id](const shapes::IShape& shape) {
+            return shape.GetId() == id;
+        });
+
+        if (exists) {
+            kept.push_back(id);
+        }
+    }
+
+    m_selectedIds = std::move(kept);
+}
+
 void editor::EditorController::NewDocument() {
     m_document.Clear();
     m_filePath.clear();
     m_lastError.clear();
+    m_history.Clear();
     ClearSelection();
     CancelGesture();
     SetTool(Tool::Select);
@@ -265,6 +355,7 @@ bool editor::EditorController::LoadDocument(const std::filesystem::path& path) {
         m_document.ReplaceWith(shapes);
         m_filePath = path;
         m_lastError.clear();
+        m_history.Clear();
     } catch (const shapes::DocumentError& error) {
         m_lastError = error.what();
         return false;
@@ -317,6 +408,7 @@ void editor::EditorController::SetTool(const Tool tool) {
 void editor::EditorController::SelectOnly(const std::string& id) {
     m_selectedIds.clear();
     m_selectedIds.push_back(id);
+    m_foreignBoundsDirty = true;
 }
 
 void editor::EditorController::ToggleSelection(const std::string& id) {
@@ -326,10 +418,12 @@ void editor::EditorController::ToggleSelection(const std::string& id) {
     } else {
         m_selectedIds.push_back(id);
     }
+    m_foreignBoundsDirty = true;
 }
 
 void editor::EditorController::ClearSelection() {
     m_selectedIds.clear();
+    m_foreignBoundsDirty = true;
     CancelGesture();
 }
 
@@ -340,10 +434,15 @@ void editor::EditorController::DeleteSelected() {
 
     const auto ids = m_selectedIds;
     m_selectedIds.clear();
+    m_foreignBoundsDirty = true;
     CancelGesture();
 
-    for (const auto& id : ids) {
-        m_document.DeleteShape(id);
+    auto command = std::make_unique<DeleteShapeCommand>(m_document, ids);
+    try {
+        command->Execute();
+        m_history.Execute(std::move(command));
+    } catch (const std::exception& error) {
+        m_lastError = error.what();
     }
 }
 
@@ -354,20 +453,26 @@ void editor::EditorController::CancelGesture() {
     m_activeGuides.clear();
 }
 
-std::vector<gfx::Rect> editor::EditorController::ForeignBounds() const {
-    std::vector<gfx::Rect> bounds;
+const std::vector<gfx::Rect>& editor::EditorController::ForeignBounds() {
+    if (!m_foreignBoundsDirty) {
+        return m_foreignBoundsCache;
+    }
+
+    m_foreignBoundsCache.clear();
+    m_foreignBoundsCache.reserve(m_document.GetShapesCount());
 
     for (const auto& shape : m_document.GetShapes()) {
         if (IsSelected(shape.GetId())) {
             continue;
         }
-        bounds.push_back(shape.GetBounds());
+        m_foreignBoundsCache.push_back(shape.GetBounds());
     }
 
-    return bounds;
+    m_foreignBoundsDirty = false;
+    return m_foreignBoundsCache;
 }
 
-editor::SnapEngine::Snap editor::EditorController::SnapTo(const gfx::Rect& bounds, const int edges) const {
+editor::SnapEngine::Snap editor::EditorController::SnapTo(const gfx::Rect& bounds, const int edges) {
     return SnapEngine::Find(bounds, ForeignBounds(), edges);
 }
 
@@ -394,12 +499,20 @@ const std::vector<editor::GuideLine> &editor::EditorController::GetActiveGuides(
 }
 
 void editor::EditorController::AddShape(const gfx::Rect& bounds, const Tool tool) {
-    const auto shape = shapes::ShapeFactory::CreateShape(
-        ToShapeType(tool), ConstrainToCanvas(bounds), gfx::Color{std::string{DefaultColorFor(tool)}});
+    auto command = std::make_unique<AddShapeCommand>(m_document, ToShapeType(tool), ConstrainToCanvas(bounds),
+                                                    gfx::Color{std::string{DefaultColorFor(tool)}});
 
-    m_document.AddShape(shape);
+    std::optional<std::string> shapeId;
+    try {
+        command->Execute();
+        shapeId = command->GetShapeId();
+    } catch (const std::exception& error) {
+        m_lastError = error.what();
+        return;
+    }
 
-    SelectOnly(shape.GetId());
+    m_history.Execute(std::move(command));
+    SelectOnly(*shapeId);
 }
 
 std::optional<editor::EditorController::HandleHit>
@@ -485,7 +598,7 @@ void editor::EditorController::ApplyMove(const gfx::Point& point, const bool dis
         current.x += delta.x;
         current.y += delta.y;
 
-        const auto [dx, dy, guides] = SnapTo(current); // Как можно эффективней
+        const auto [dx, dy, guides] = SnapTo(current);
         delta.x += dx;
         delta.y += dy;
         m_activeGuides = guides;
@@ -513,7 +626,7 @@ void editor::EditorController::ApplyMove(const gfx::Point& point, const bool dis
         bounds.x += delta.x;
         bounds.y += delta.y;
 
-        m_document.SetShapeBounds(m_move->ids[i], ConstrainToCanvas(bounds)); // Сделать сохраннеи в модель оптимальнее
+        m_document.SetShapeBounds(m_move->ids[i], ConstrainToCanvas(bounds));
     }
 }
 
@@ -566,8 +679,12 @@ void editor::EditorController::CommitCreatedShape() {
     CancelGesture();
 
     auto bounds = drawn;
+
+    if (bounds.width <= 0.0 || bounds.height <= 0.0) {
+        return;
+    }
+
     if (bounds.width < minShapeSize && bounds.height < minShapeSize) {
-        AddShape(DefaultBoundsAt(anchor), tool);
         return;
     }
 
@@ -576,14 +693,102 @@ void editor::EditorController::CommitCreatedShape() {
     AddShape(ConstrainToCanvas(bounds), tool);
 }
 
-gfx::Rect editor::EditorController::DefaultBoundsAt(const gfx::Point& anchor) const {
-    return {anchor.x - defaultShapeSize.width / 2,
-            anchor.y - defaultShapeSize.height / 2,
-            defaultShapeSize.width,
-            defaultShapeSize.height};
+void editor::EditorController::CommitMove() {
+    if (!m_move) {
+        return;
+    }
+
+    const auto gesture = *m_move;
+    m_move.reset();
+
+    if (gesture.ids.empty()) {
+        return;
+    }
+
+    std::vector<std::string> ids;
+    std::vector<gfx::Rect> startBounds;
+    std::vector<gfx::Rect> bounds;
+    ids.reserve(gesture.ids.size());
+    startBounds.reserve(gesture.ids.size());
+    bounds.reserve(gesture.ids.size());
+
+    for (std::size_t i = 0; i < gesture.ids.size(); ++i) {
+        const auto& id = gesture.ids[i];
+        ids.push_back(id);
+        startBounds.push_back(gesture.startBounds[i]);
+        bounds.push_back(m_document.GetShapeBounds(id));
+    }
+
+    bool changed = false;
+    for (std::size_t i = 0; i < startBounds.size(); ++i) {
+        if (startBounds[i] != bounds[i]) {
+            changed = true;
+            break;
+        }
+    }
+
+    if (!changed) {
+        return;
+    }
+
+    try {
+        m_history.Execute(std::make_unique<MoveShapesCommand>(m_document, ids, startBounds, bounds));
+    } catch (const std::exception& error) {
+        m_lastError = error.what();
+    }
 }
 
-gfx::Rect editor::EditorController::GroupBounds(const std::vector<gfx::Rect>& bounds) const {
+void editor::EditorController::CommitResize() {
+    if (!m_resize) {
+        return;
+    }
+
+    const auto gesture = *m_resize;
+    m_resize.reset();
+
+    if (!IsSelected(gesture.id)) {
+        return;
+    }
+
+    std::vector<std::string> ids;
+    std::vector<gfx::Rect> startBounds;
+    std::vector<gfx::Rect> bounds;
+    ids.reserve(gesture.otherIds.size() + 1);
+    startBounds.reserve(gesture.otherIds.size() + 1);
+    bounds.reserve(gesture.otherIds.size() + 1);
+
+    ids.push_back(gesture.id);
+    startBounds.push_back(gesture.startBounds);
+    bounds.push_back(m_document.GetShapeBounds(gesture.id));
+
+    for (std::size_t i = 0; i < gesture.otherIds.size(); ++i) {
+        const auto& id = gesture.otherIds[i];
+        ids.push_back(id);
+        startBounds.push_back(gesture.otherBounds[i]);
+        bounds.push_back(m_document.GetShapeBounds(id));
+    }
+
+    bool changed = false;
+    for (std::size_t i = 0; i < startBounds.size(); ++i) {
+        if (!(startBounds[i] == bounds[i])) {
+            changed = true;
+            break;
+        }
+    }
+
+    if (!changed) {
+        return;
+    }
+
+    try {
+        m_history.Execute(std::make_unique<ResizeShapesCommand>(m_document, ids, startBounds, bounds));
+    } catch (const std::exception& error) {
+        m_lastError = error.what();
+    }
+}
+
+
+gfx::Rect editor::EditorController::GroupBounds(const std::vector<gfx::Rect>& bounds) {
     if (bounds.empty()) {
         return {};
     }
@@ -603,7 +808,7 @@ gfx::Rect editor::EditorController::GroupBounds(const std::vector<gfx::Rect>& bo
     return {left, top, right - left, bottom - top};
 }
 
-gfx::Rect editor::EditorController::Normalize(const gfx::Point& anchor, const gfx::Point& point) const {
+gfx::Rect editor::EditorController::Normalize(const gfx::Point& anchor, const gfx::Point& point) {
     return {std::min(anchor.x, point.x), std::min(anchor.y, point.y),
             std::abs(point.x - anchor.x), std::abs(point.y - anchor.y)};
 }

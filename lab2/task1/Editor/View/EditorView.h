@@ -6,9 +6,9 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "../Picture/model/Picture.h"
-#include "EditorController.h"
-#include "EditorTypes.h"
+#include "../../Picture/model/Picture.h"
+#include "../Controller/EditorController.h"
+#include "../Controller/EditorTypes.h"
 
 namespace editor {
     class EditorView {

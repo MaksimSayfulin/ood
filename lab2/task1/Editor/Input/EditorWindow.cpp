@@ -4,9 +4,9 @@
 #include <iostream>
 #include <optional>
 
-#include "EditorLayout.h"
-#include "EditorView.h"
-#include "SelectionFrame.h"
+#include "../View/EditorLayout.h"
+#include "../View/EditorView.h"
+#include "../Geometry/SelectionFrame.h"
 
 namespace {
     bool HasSnapDisabled() {
@@ -90,7 +90,7 @@ gfx::Rect editor::EditorWindow::GetCanvasBounds() const {
     return m_canvasBounds;
 }
 
-void editor::EditorWindow::Update(EditorView& view, const EditorController& controller, const shapes::Picture& document) {
+void editor::EditorWindow::Update(EditorView& view, EditorController& controller, const shapes::Picture& document) {
     HandleEvents(controller);
     UpdateCursor(controller);
 
@@ -160,7 +160,7 @@ boost::signals2::signal<void(double)> &editor::EditorWindow::OnListScrolled() {
     return m_listScrolledEvent;
 }
 
-void editor::EditorWindow::HandleEvents(const EditorController& controller) {
+void editor::EditorWindow::HandleEvents(EditorController& controller) {
     while (const std::optional event = m_window.pollEvent()) {
         if (event->is<sf::Event::Closed>()) {
             m_window.close();
@@ -177,7 +177,7 @@ void editor::EditorWindow::HandleEvents(const EditorController& controller) {
 
         if (m_prompt) {
             if (const auto* key = event->getIf<sf::Event::KeyPressed>()) {
-                HandleKey(*key);
+                HandleKey(controller, *key);
             } else if (const auto* entered = event->getIf<sf::Event::TextEntered>()) {
                 HandleTextEntered(*entered);
             }
@@ -248,12 +248,12 @@ void editor::EditorWindow::HandleEvents(const EditorController& controller) {
         }
 
         if (const auto* key = event->getIf<sf::Event::KeyPressed>()) {
-            HandleKey(*key);
+            HandleKey(controller, *key);
         }
     }
 }
 
-void editor::EditorWindow::HandleKey(const sf::Event::KeyPressed& key) {
+void editor::EditorWindow::HandleKey(EditorController& controller, const sf::Event::KeyPressed& key) {
     if (m_prompt) {
         if (key.code == sf::Keyboard::Key::Enter) {
             const auto mode = m_prompt->GetMode();
@@ -270,7 +270,12 @@ void editor::EditorWindow::HandleKey(const sf::Event::KeyPressed& key) {
     }
 
     const bool control = key.control || key.system;
-    if (control && key.code == sf::Keyboard::Key::S) {
+    const bool shift = key.shift;
+    if (control && key.code == sf::Keyboard::Key::Z && !shift) {
+        controller.Undo();
+    } else if (control && (key.code == sf::Keyboard::Key::Y || (key.code == sf::Keyboard::Key::Z && shift))) {
+        controller.Redo();
+    } else if (control && key.code == sf::Keyboard::Key::S) {
         m_commandEvent(UiCommand::SaveDocument);
     } else if (control && key.code == sf::Keyboard::Key::O) {
         m_commandEvent(UiCommand::OpenDocument);

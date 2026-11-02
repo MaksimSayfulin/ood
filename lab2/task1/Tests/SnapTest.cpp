@@ -2,9 +2,9 @@
 #include <string>
 
 #include "../Catch/Catch.hpp"
-#include "../Editor/EditorController.h"
-#include "../Editor/SelectionFrame.h"
-#include "../Editor/SnapEngine.h"
+#include "../Editor/Controller/EditorController.h"
+#include "../Editor/Geometry/SelectionFrame.h"
+#include "../Editor/Geometry/SnapEngine.h"
 #include "../Graphics/Canvas/CanvasSVG/CanvasSvg.h"
 #include "../Shape/model/ShapeFactory.h"
 

@@ -3,7 +3,7 @@
 #include <string>
 #include <string_view>
 
-#include "EditorTypes.h"
+#include "../Controller/EditorTypes.h"
 
 namespace editor {
     class FilePrompt {
